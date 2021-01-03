@@ -9,11 +9,6 @@
 
 <<<
 
-== SQL: Llenguatge de definició de dades (DDL)
-
-En aquest apartat pararem atenció a l'ús de l'SQL per crear bases de dades i
-estructures de taules, utilitzant l'SQL com un llenguatge de definició de
-dades (_DDL_).
 
 === Creació de bases de dades
 
@@ -25,9 +20,9 @@ l'estructura de les taules.
 ====
 [source,sql]
 ----
-CREATE DATABASE Traders;
+CREATE DATABASE VIDEOJOCS;
 ----
-Amb aquesta sentència es crea una nova base de dades anomenada SW. Un cop
+Amb aquesta sentència es crea una nova base de dades anomenada VIDEOJOCS. Un cop
 s'ha creat la base de dades, el següent pas és crear les seves taules.
 ====
 
@@ -35,7 +30,7 @@ s'ha creat la base de dades, el següent pas és crear les seves taules.
 ====
 [source,sql]
 ----
-DROP DATABASE Traders;
+DROP DATABASE VIDEOJOCS;
 ----
 ====
 
@@ -52,7 +47,7 @@ CREATE TABLE nom_taula (
 ----
 
 _nom_taula_ és el nom de taula de la base de dades, com per exemple,
-*Employees*. Cada camp de CREATE TABLE té tres parts:
+*PLATAFORMES*. Cada camp de CREATE TABLE té tres parts:
 
 1. Nom de la columna
 2. Tipus de dada
@@ -65,8 +60,8 @@ de columna són _FirstName_ i _LastName_.
 
 ==== Tipus de dades
 
-El tipus de dada ha d'ésser un dels tipus definits pel MySQL/MariaDB. Molts
-tipus de dades tenen una longitud, com CHAR(35) o DECIMAL(8,2).
+El tipus de dada ha d'ésser un dels tipus definits pel MySQL. Molts
+tipus de dades tenen una longitud, com CHAR(45) o DECIMAL(8,2).
 
 ===== Tipus de dades numèriques
 
@@ -151,12 +146,11 @@ ells és la longitud màxima que accepten.
 - Per un nombre predefinit de cadenes de text:
 +
 El tipus ENUM permet especificar un conjunt fix de cadenes de text que són
-vàlides per un cert camp. Per exemple, un camp que guardi el nom d'un dia de la
-setmana podria declarar-se com:
+vàlides per un cert camp. Per exemple, un camp que guardi el nom de les diverses plataformes de videojocs:
 +
 [source,sql]
 ----
-ENUM('dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge');
+ENUM('ps4','xbox','ps5','switch','pc');
 ----
 +
 Internament, les dades ENUM es guarden com a enters, així que un ENUM ocupa
@@ -229,7 +223,7 @@ de totes les columnes.
 
 Una clau primària és, automàticament, NOT NULL.
 
-El MySQL/MariaDB crea un índex automàticament per a totes les claus primàries.
+El MySQL crea un índex automàticament per a totes les claus primàries.
 
 ====
 Per il·lustrar la creació d'una taula i l'ús dels diversos tipus i modificadors,
