@@ -1,0 +1,719 @@
+= Llenguatges SQL: DDL
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== SQL: Llenguatge de definició de dades (DDL)
+
+En aquest apartat pararem atenció a l'ús de l'SQL per crear bases de dades i
+estructures de taules, utilitzant l'SQL com un llenguatge de definició de
+dades (_DDL_).
+
+=== Creació de bases de dades
+
+Les principals sentències SQL DDL són CREATE DATABASE i CREATE/DROP/ALTER
+TABLE. La sentència SQL CREATE s'utilitza per crear la base de dades i
+l'estructura de les taules.
+
+.Creació d'una base de dades
+====
+[source,sql]
+----
+CREATE DATABASE Traders;
+----
+Amb aquesta sentència es crea una nova base de dades anomenada SW. Un cop
+s'ha creat la base de dades, el següent pas és crear les seves taules.
+====
+
+.Eliminació d'una base de dades
+====
+[source,sql]
+----
+DROP DATABASE Traders;
+----
+====
+
+El format general de l'ordre CREATE TABLE és:
+
+[source,sql]
+----
+CREATE TABLE nom_taula (
+ nom_columna tipus_de_dada restriccions_de_columna,
+ nom_columna tipus_de_dada restriccions_de_columna,
+ ...
+ restriccions_de_taula
+);
+----
+
+_nom_taula_ és el nom de taula de la base de dades, com per exemple,
+*Employees*. Cada camp de CREATE TABLE té tres parts:
+
+1. Nom de la columna
+2. Tipus de dada
+3. Restriccions opcionals de la columna
+
+==== Noms de columnes
+
+El nom d'una columna ha d'ésser únic dins de la taula. Alguns exemple de nom
+de columna són _FirstName_ i _LastName_.
+
+==== Tipus de dades
+
+El tipus de dada ha d'ésser un dels tipus definits pel MySQL/MariaDB. Molts
+tipus de dades tenen una longitud, com CHAR(35) o DECIMAL(8,2).
+
+===== Tipus de dades numèriques
+
+- Per nombres enters:
++
+De petit a gran: TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT. Es pot veure quan
+ocupen i el seu rang de valors a
+http://dev.mysql.com/doc/refman/5.7/en/integer-types.html.
++
+Opcionalment, els tipus enters poden ser UNSIGNED. En aquest cas, només es poden
+guardar nombres positius.
++
+A més, els tipus enters poden portar una longitud, per exemple, INT(5). Aquesta
+longitud no modifica el rang i mida del tipus de dades, és només una indicació
+de com les aplicacions han de visualitzar les dades.
+
+- Per nombres reals:
++
+El tipus DECIMAL (o NUMERIC) permet guardar nombres amb una certa precisió i
+escala. DECIMAL garanteix que els nombres es guardaran de forma exacte amb la
+precisió especificada.
++
+La declaració, per exemple, DECIMAL(5,2), indica que es guardaran fins a 5
+xifres, de les quals dues són decimals. Així, el rang de valors que es poden
+guardar en un DECIMAL(5,2) és des del -999,99 al 999,99. DECIMAL(5) és sinònim
+per DECIMAL(5,0), i DECIMAL és sinònim de DECIMAL(10).
++
+Els tipus FLOAT i DOUBLE permeten guardar nombres decimals apoximats, i són
+equivalents als tipus de dades *float* i *double* d'alguns llenguatges de
+programació, com per exemple el Java.
+
+- Per seqüències de bits:
++
+El tipus BIT permet guardar seqüències de bits. Per exemple, BIT(8) guarda
+seqüències de 8 bits. Per indicar un valor literal de bits es fa amb el prefix
+"b", per exemple: b'100101'.
+
+- Per dades booleanes:
++
+Per guardar un valor del tipus *true* o *false* podem utilitzar el tipus BOOL
+(o BOOLEAN). Realment, aquestes paraules són sinònimes per TINYINT(1). Els
+valors diferents de 0 es consideren *true* i 0 es considera *false*.
++
+També es pot utilitzar un BIT(1) per guardar un valor booleà.
+
+===== Tipus de dades de text
+
+- Per cadenes de text curtes:
++
+Els tipus CHAR i VARCHAR s'utilitzen per les cadenes de text més habituals.
+Tots dos necessiten que es declarin indicant la quantitat de caràcters a
+guardar, per exemple, CHAR(30) o VARCHAR(30).
++
+La diferència rau en què CHAR(30) guardarà sempre 30 caràcters. Si la cadena
+que s'hi guarda és més curta, s'afegeixen espais per completar la quantitat de
+caràcters indicada (aquests espais es treuren de nou quan es recupera la
+dada). En canvi, pel VARCHAR(30) el que s'indica és el màxim de caràcters que
+es poden guardar, però les cadenes més curtes es guarden sense ocupar espai
+de més.
++
+En general, cal utilitzar CHAR per les dades que sabem que sempre tindran la
+mateixa longitud i VARCHAR per dades de longitud variable. Per dades que sempre
+tenen la mateixa longitud, el VARCHAR ocupa més espai internament. A més, si
+tots els camps d'una taula són de longitud fixa, la cerca de dades sobre aquesta
+taula és més ràpida.
+
+- Per cadenes de bytes:
++
+S'utilitzen BINARY i VARBINARY per guardar seqüències de bytes que no siguin
+text, o que no es vulguin tractar com a text.
+
+- Per cadenes llargues:
++
+S'utilitza TEXT per cadenes de text llargues i BLOB per cadenes binàries
+llargues. Els tipus s'assemblen a VARCHAR i VARBINARY respectivament però
+tenen una capacitat d'emmagatzematge molt superior.
++
+TEXT i BLOB tenen 4 variants cadascun: TINYTEXT, TEXT, MEDIUMTEXT i LONGTEXT, i
+TINYBLOB, BLOB, MEDIUMBLOB i LONGBLOB respectivament. L'única diferència entre
+ells és la longitud màxima que accepten.
+
+- Per un nombre predefinit de cadenes de text:
++
+El tipus ENUM permet especificar un conjunt fix de cadenes de text que són
+vàlides per un cert camp. Per exemple, un camp que guardi el nom d'un dia de la
+setmana podria declarar-se com:
++
+[source,sql]
+----
+ENUM('dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge');
+----
++
+Internament, les dades ENUM es guarden com a enters, així que un ENUM ocupa
+molt menys que utilitzar per exemple un VARCHAR per guardar la mateixa
+informació. Utilitzar un ENUM és similar a utilitzar un nombre enter amb
+l'avantatge que amb un ENUM les consultes i respostes són més clares.
++
+El tipus SET també permet definir un conjunt de cadenes de text vàlides per un
+camp però, a diferència d'ENUM, un registre pot agafar cap, un, o més valors
+dels valors definits al conjunt.
+
+===== Tipus de dades per temps i dates
+
+El tipus DATE permet guardar dates. Les dates es guarden en format
+`any-mes-dia`, per exemple, `'2016-10-05'`.
+
+El tipus DATETIME permet emmagatzemar combinacions d'una data i una hora
+determinada, per exemple, `'2016-10-05 15:40:32'`. Els segons admeten també
+fraccions.
+
+El tipus TIME s'utilitza per guardar una hora determinada, sense data, per
+exemple `'15:30:32'`.
+
+Finalment, el tipus YEAR s'utiltiza per guardar anys, per exemple `2016`.
+
+El tipus TIMESTAMP es similar a DATETIME, però s'emmagatzema sempre en el fus
+horari UTC i té un rang de valors més reduït. S'utilitza sovint per marcar
+esdeveniments relacionats amb la pròpia base de dades; per exemple, si volem
+guardar el moment en què una fila s'ha actualitzat per última vegada,
+utilitzaríem un camp de tipus TIMESTAMP.
+
+=== Restriccions de columna opcionals
+
+La declaració d'una columna pot anar acompanyada d'una sèrie de modificadors,
+que especifiquen el comportament que ha de tenir.
+
+==== NULL i NOT NULL
+
+El modificador NULL indica que la columna pot tenir valors NULL, mentre que
+NOT NULL prohibeix que s'hi puguin guardar NULLs. Si no s'indica ni un ni
+l'altre, se suposa que s'hi poden guardar valors NULL.
+
+==== DEFAULT
+
+El modificador DEFAULT permet especificar un valor per defecte per a la
+columna, de manera que si a l'inserir una fila no s'indica el valor per aquesta
+columna, s'agafa el valor per defecte.
+
+==== AUTO_INCREMENT
+
+El modificador AUTO_INCREMENT indica que es tracta d'una columna entera, a la
+qual volem que s'assigni un valor diferent per cada fila. S'utilitza sobretot
+per generar claus primàries sintètiques i que rebin un valor vàlid
+automàticament.
+
+==== UNIQUE
+
+El modificador UNIQUE indica que no hi poden haver dos valors no null iguals
+en aquella columna per tota la taula.
+
+La declaració d'una columna com a UNIQUE fa que es creï automàticament un
+índex per la columna seleccionada. Aquest índex accelera les cerques i
+ordenacions que utilitzen la columna.
+
+==== PRIMARY KEY
+
+Indica que aquesta columna és la clau primària de la taula. Si la clau primària
+consisteix en més d'una columna, cal especificar-la després de la declaració
+de totes les columnes.
+
+Una clau primària és, automàticament, NOT NULL.
+
+El MySQL/MariaDB crea un índex automàticament per a totes les claus primàries.
+
+====
+Per il·lustrar la creació d'una taula i l'ús dels diversos tipus i modificadors,
+anem a crear un exemple de taula _Employees_:
+
+[source,sql]
+----
+CREATE TABLE Employees (
+ Id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ DNI             CHAR(9) NOT NULL UNIQUE,
+ DepartmentId    INT UNSIGNED NOT NULL,
+ FirstName       VARCHAR(50) NOT NULL,
+ LastName        VARCHAR(100) NOT NULL DEFAULT '',
+ Active          TINYINT(1) NOT NULL DEFAULT TRUE,
+ SupervisorId    INT UNSIGNED,
+ BirthDate       DATE NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+====
+
+El primer camp és un identificador dels treballadors, de tipus INT sense
+signe. L'identificador de cada treballador es crearà automàticament si no
+indiquem el contrari, i constitueix la clau primària de la taula.
+
+El segon camp és el DNI, que sempre ocupa 9 caràcters. No s'accepten valors
+NULL i no hi poden haver dos DNI repetits a la taula.
+
+D'una forma similar, podem crear una taula _Departments_, una taula _Projects_
+i una taula _Assignments_ utilitzant l'ordre SQL CREATE TABLE com es mostra
+als següents exemples.
+
+[source,sql]
+----
+CREATE TABLE Departments (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ DepartmentName VARCHAR(30) NOT NULL UNIQUE,
+ OfficeNumber   CHAR(5) NOT NULL,
+ Phone          CHAR(13) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+[source,sql]
+----
+CREATE TABLE Projects (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ ProjectName    VARCHAR(100) NOT NULL,
+ DepartmentId   INT UNSIGNED NOT NULL,
+ MaxHours       DECIMAL(8,2) NOT NULL DEFAULT 100,
+ StartDate      DATETIME,
+ EndDate        DATETIME
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+En aquest últim exemple, es crea una taula de tasques amb tres camps:
+l'identificador del projecte, el número d'empleat a qui s'ha assignat la tasca
+i les hores que hi porta dedicades.
+
+[source,sql]
+----
+CREATE TABLE Assignments (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ EmployeeId     INT UNSIGNED NOT NULL,
+ HoursWorked    DECIMAL(6,2) UNSIGNED
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+=== Restriccions de taula
+
+Les restriccions de taula s'identifiquen per la paraula clau CONSTRAINT i es
+poden utilitzar per definir diverses restriccions, com es descriu a
+continuació.
+
+==== Restriccions de clau primària
+
+La clau primària també es pot especificar com una restricció de taula. Això
+és especialment útil quan la clau està formada per més d'una columna.
+
+Per exemple, en una cadena d'hotels, una habitació s'identifica per la clau de
+l'hotel i el número d'habitació:
+
+[source,sql]
+----
+CREATE TABLE Rooms (
+ HotelNo INT UNSIGNED NOT NULL,
+ RoomNo  INT UNSIGNED NOT NULL,
+ Type CHAR(9),
+ Price DECIMAL(6,2),
+ CONSTRAINT PRIMARY KEY (HotelNo, RoomNo)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+==== Restriccions de clau forana (FOREIGN KEY)
+
+La restricció de clau forana (FOREIGN KEY) defineix una columna, o una
+combinació de columnes, el valor de les quals coincideix amb la clau
+primària d'una altra taula.
+
+L'ús de claus foranes garanteix la integritat referencial entre les dues
+taules: qualsevol inserció o modificació de la columna o columnes que són
+claus foranes han de coincidir forçosament amb valors vàlids de clau
+primària a la taula principal, o fallarà l'operació.
+
+El comportament que s'ha d'adoptar en cas que es modifiquin o s'eliminin els
+elements referenciats a la taula principal es pot triar en el moment de crear
+la restricció de clau forana.
+
+El tipus de dada de la clau forana ha de coincidir amb el tipus de dada de la
+clau primària a què fa referència.
+
+Aquesta és la sintaxi general (simplificada) de la restricció de clau forana:
+
+[source,sql]
+----
+CONSTRAINT [nom_restricció] FOREIGN KEY
+    (nom_columna, ...)
+    REFERENCES nom_taula (nom_columna, ...)
+    [ON DELETE opció]
+    [ON UPDATE opció]
+----
+
+El _nom_restricció_ és el nom que es donarà a la restricció que estem creant.
+Si no n'especifiquem cap, se'n crearà un automàticament.
+
+Els _nom_columna_ de la taula on creem la clau forana han de correspondre's
+en el mateix ordre als _nom_columna_ de la taula referenciada.
+
+_nom_taula_ és el nom de la taula a què fem referència.
+
+L'_opció_ que especifiquem a ON DELETE i a ON_UPDATE pot ésser una d'aquestes:
+
+- `CASCADE`: quan s'esborra/s'actualitza una fila referenciada a la taula
+principal, també s'esborra/actualitza la fila de la taula que té la clau
+forana.
+
+- `SET NULL`: quan s'esborra/s'actualitza una fila a la taula principal, al camp
+associat se li assigna el valor NULL. Evidentment, les columnes de la clau
+forana han d'acceptar valors NULL.
+
+- `NO ACTION`: no es permet que s'esborrin/modifiquin files de la taula principal
+que tinguin files associades. Aquesta és l'opció per defecte tant per ON
+DELETE com per ON UPDATE.
+
+Per exemple, podem crear les taules de l'apartat anterior afegint les
+restriccions de claus foranes adequades:
+
+[source,sql]
+----
+CREATE TABLE Projects (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ ProjectName    VARCHAR(100) NOT NULL,
+ DepartmentId   INT UNSIGNED NOT NULL,
+ MaxHours       DECIMAL(8,2) NOT NULL DEFAULT 100,
+ StartDate      DATETIME,
+ EndDate        DATETIME,
+ CONSTRAINT FOREIGN KEY (DepartmentId) REFERENCES Departments(Id)
+   ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+A la taula `Projects` hem considerat que no es pot esborrar un departament
+mentre tingui projectes assignats.
+
+[source,sql]
+----
+CREATE TABLE Assignments (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ EmployeeId     INT UNSIGNED NOT NULL,
+ HoursWorked    DECIMAL(6,2) UNSIGNED,
+ CONSTRAINT FOREIGN KEY (EmployeeId) REFERENCES Employees(Id)
+   ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+En canvi, a la taula `Assignments` hem considerat oportú eliminar totes les
+tasques assignades a un empleat en cas que s'elimini l'empleat.
+
+Les restriccions de clau forana han d'incloure totes les columnes de la clau
+primària de la taula referenciada.
+
+Per exemple, una taula de reserves sobre les habitacions d'hotels de l'apartat
+anterior podria tenir aquest aspecte:
+
+[source,sql]
+----
+CREATE TABLE Bookings (
+  BookingNumber   INT UNSIGNED PRIMARY KEY,
+  CheckIn         DATE NOT NULL,
+  CheckOut        DATE NOT NULL,
+  CustomerId      INT UNSIGNED NOT NULL,
+  HotelNo         INT UNSIGNED NOT NULL,
+  RoomNo          INT UNSIGNED NOT NULL,
+  CONSTRAINT FOREIGN KEY (CustomerId) REFERENCES Customers(Id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (HotelNo, RoomNo) REFERENCES Rooms(HotelNo, RoomNo)
+    ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+==== Restriccions de comprovació (CHECK)
+
+La restricció CHECK limita els valors que es poden introduir en una taula.
+Es poden establir condicions de forma similar a com es fa en una clàusula
+WHERE que facin referència a columnes de la mateixa taula.
+
+La condició d'un CHECK ha d'avaluar a una expressió booleana (_true_ o _false_),
+i la inserció/modificació d'una fila només es podrà fer si la condició
+avalua a _true_.
+
+[WARNING]
+====
+El MySQL llegeix però ignora les restriccions CHECK.
+
+El MariaDB força el compliment dels CHECK a partir de la versió 10.2.1.
+====
+
+En el següent exemple, es restringeix el camp _Type_ per tal que només pugui
+tenir els valors 'Single', 'Double', 'Suite', o 'Executive':
+
+[source,sql]
+----
+CREATE TABLE Rooms (
+ HotelNo INT UNSIGNED NOT NULL,
+ RoomNo  INT UNSIGNED NOT NULL,
+ Type CHAR(9),
+ Price DECIMAL(6,2),
+ CONSTRAINT PRIMARY KEY (HotelNo, RoomNo),
+ CONSTRAINT FOREIGN KEY (HotelNo) REFERENCES Hotels(HotelNo),
+ CHECK (Type IN ('Single', 'Double', 'Suite', 'Executive'))
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+En aquest segon exemple, la data en què s'ha contractat als empleats
+(`HireDate`) ha de ser anterior a l'1 de gener de 2014, o ha de tenir un límit
+de sou de 300.000 dòlars.
+
+[source,sql]
+----
+CREATE TABLE SalesReports (
+ EmpNum INT UNSIGNED NOT NULL CHECK (EmpNum BETWEEN 101 AND 199),
+ Name CHAR(15),
+ Age INT UNSIGNED CHECK (Age >= 21),
+ Quota DECIMAL(7,2) CHECK (Quota >= 0.0),
+ HireDate DateTime,
+ CHECK ((HireDate < '2016-01-01') OR (Quota<=300000))
+);
+----
+
+==== Restriccions UNIQUE
+
+Si el conjunt format per diverses columnes no es pot repetir, podem definir una
+restricció UNIQUE a nivell de taula.
+
+Per exemple:
+
+[source,sql]
+----
+CREATE TABLE Projects (
+ Id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ ProjectName    VARCHAR(100) NOT NULL,
+ DepartmentId   INT UNSIGNED NOT NULL,
+ MaxHours       DECIMAL(8,2) NOT NULL DEFAULT 100,
+ StartDate      DATETIME,
+ EndDate        DATETIME,
+ CONSTRAINT FOREIGN KEY (DepartmentId) REFERENCES Departments(Id)
+   ON DELETE NO ACTION ON UPDATE CASCADE,
+ CONSTRAINT UNIQUE (ProjectName, DepartmentId)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+----
+
+En aquest cas, tot i que admetem que diversos projectes es diguin igual, no
+deixem que el mateix departament tingui dos projectes amb el mateix nom.
+
+=== Modificació de taules
+
+Es poden utilitzar sentències ALTER TABLE per modificar taules existents.
+ALTER TABLE permet afegir i esborrar columnes, modificar restriccions,
+canviar el tipus de columnes, entre d'altres.
+
+En aquest exemple podem veure un seguit de modificacions sobre la taula
+_Hotels_:
+
+[source,sql]
+----
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+> ALTER TABLE Hotels ADD COLUMN Name VARCHAR(100);
+Query OK, 0 rows affected (0.95 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | YES  |     | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+> ALTER TABLE Hotels ADD CONSTRAINT UNIQUE (Name);
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | YES  | UNI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+> ALTER TABLE Hotels MODIFY Name VARCHAR(100) NOT NULL;
+Query OK, 0 rows affected (1.33 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | NO   | UNI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+> ALTER TABLE Hotels DROP COLUMN Name;
+Query OK, 0 rows affected (0.97 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+----
+
+=== Eliminació de taules
+
+La sentència DROP TABLE permet eliminar una taula de la base de dades.
+
+Aquesta sentència eliminaria la taula _Hotels_ de la base de dades:
+
+[source,sql]
+----
+DROP TABLE Hotels;
+----
+
+En canvi, la sentència TRUNCATE permet buidar el contingut d'una taula, sense
+esborrar la taula en sí:
+
+[source,sql]
+----
+TRUNCATE Hotels;
+----
+
+=== Creació de vistes
+
+Una _vista_ és similar a una taula, però no guarda dades reals, sinó que les
+dades que s'hi mostren són el resultat d'executar una SELECT sobre altres
+taules.
+
+Per exemple, a la base de dades Sakila tenim la vista `film_list` on podem
+veure tota la informació de les pel·lícules recopilada: el títol, els actors que
+hi apareixen, els seus gèneres, etc.
+
+Aquestes dades provenen de diverses taules (el títol de `film`, els actors de
+`film_actor` i `actor`, i els gèneres de `film_category` i `category`, però en
+aquesta vista s'han recopilat de manera que visualment sigui més còmode
+consultar-les.
+
+Una vista no emmagatzema dades noves, sinó que el que s'hi veu és el resultat
+d'executar una SELECT que s'ha guardat com a part de la definició de la vista
+(podem veure la SELECT en qüestió executant `SHOW CREATE TABLE film_list`).
+
+Sobre una vista podem executar qualsevol SELECT però no podem executar-hi la
+major part de sentències de modificació de dades, perquè és complicat saber a
+quines taules reals s'haurien d'aplicar les modificacions.
+
+Per crear una vista s'utilitza la sentència `SELECT VIEW`. Per exemple, sobre
+la base de dades Chinook podríem crear una vista que ens resumís la informació
+de cada àlbum:
+
+[source,sql]
+----
+CREATE VIEW AlbumInfo AS
+  SELECT al.Title AS Album, a.Name AS Artist, GROUP_CONCAT(t.Name) AS Tracks
+  FROM Album al
+  JOIN Artist a ON al.ArtistId=a.ArtistId
+  JOIN Track t ON al.AlbumId=t.AlbumId
+  GROUP BY al.AlbumId, al.Title, a.Name;
+----
+
+Aquesta vista conté el títol de l'àlbum, el nom de l'artista, i una llista amb
+el nom de les cançons incloses.
+
+[NOTE]
+====
+La funció _GROUP_CONCAT()_ uneix tots els valors d'una columna que s'han unit
+per causa d'un _GROUP BY_ en una única cadena de text.
+====
+
+Podem fer consultes sobre aquesta vista:
+
+[source,sql]
+----
+SELECT * FROM AlbumInfo WHERE Artist LIKE 'The Rolling Stones'\G
+*************************** 1. row ***************************
+ Album: Hot Rocks, 1964-1971 (Disc 1)
+Artist: The Rolling Stones
+Tracks: Under My Thumb,Play With Fire,Get Off Of My Cloud,Paint It Black,
+Let's Spend The Night Together,Heart Of Stone,As Tears Go By,
+19th Nervous Breakdown,Ruby Tuesday,Time Is On My Side,Satisfaction,
+Mother's Little Helper
+*************************** 2. row ***************************
+ Album: No Security
+Artist: The Rolling Stones
+Tracks: Out Of Control,Intro,Flip The Switch,Saint Of Me,Live With Me,
+The Last Time,Gimmie Shelters,Corinna,Sister Morphine,Thief In The Night,
+You Got Me Rocking,Memory Motel,Wainting On A Friend,Respectable
+*************************** 3. row ***************************
+ Album: Voodoo Lounge
+Artist: The Rolling Stones
+Tracks: Sparks Will Fly,Moon Is Up,Brand New Car,Blinded By Rainbows,
+Mean Disposition,You Got Me Rocking,New Faces,I Go Wild,Suck On The Jugular,
+Thru And Thru,Love Is Strong,The Worst,Out Of Tears,Sweethearts Together,
+Baby Break It Down
+----
+
+Aquesta vista no permetrà modificacions perquè el GROUP BY fa que no es pugui
+saber quines eren les files originals a modificar.
+
+Al següent exemple creem una vista que ens mostra la informació dels temes i
+el nom del seu gènere:
+
+[source,sql]
+----
+CREATE VIEW TrackGenre AS
+  SELECT TrackId, Track.Name AS TrackName, Genre.Name AS GenreName
+  FROM Track
+  JOIN Genre ON Track.GenreId=Genre.GenreId;
+----
+
+En aquest cas podem, per exemple, executar UPDATE perquè el SGBD pot deduir
+quina és la dada real que ha de modificar:
+
+[source,sql]
+----
+SELECT * FROM TrackGenre WHERE TrackId=10;
++---------+------------+-----------+
+| TrackId | TrackName  | GenreName |
++---------+------------+-----------+
+|      10 | Evil Walks | Rock      |
++---------+------------+-----------+
+1 row in set (0.00 sec)
+
+UPDATE TrackGenre SET GenreName='Blues' WHERE TrackId=10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+----
+
+[WARNING]
+====
+El canvi que s'ha fet potser no era el que esperàvem: s'ha modificat el nom
+del gènere Rock i se li ha dit Blues, no s'ha modificat el `GenreId` del tema.
+====
+
+=== Termes claus
+
+*DDL*: abreviatura de _data definition language_ (llenguatge de definició de
+dades).
+
+*DML*: abreviatura de _data manipulation language_ (llenguatge de manipulació
+de dades).
+
+*SEQUEL*: acrònim de _Structured English Query Language_, el llenguatge
+antecessor del SQL, dissenyar per manipular i recuperar dades guardades al
+sistema gestor de bases de dades quasi-relacional System R, de IBM.
+
+*Structured Query Language (SQL)*: un llenguatge de bases de dades dissenyat per
+gestionar dades guardades en un sistema gestor de bases de dades relacional.
