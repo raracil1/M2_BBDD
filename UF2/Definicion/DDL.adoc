@@ -1,0 +1,295 @@
+= Llenguatges SQL: DDL
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== SQL: Lenguaje de definición de datos (DDL)
+
+
+
+=== Creació de bases de dades
+
+Vamos a ver como crear nuestra base de datos de Videojuegos.
+====
+[source,sql]
+----
+CREATE DATABASE Videojuegos;
+----
+Ahora ya podemos proceder a crear las tablas ....
+====
+
+Elimiar base de datos.
+
+====
+[source,sql]
+----
+DROP DATABASE Videojuegos;
+----
+====
+
+Para crear las tablas tenemos la siguiente sintaxis.
+
+[source,sql]
+----
+CREATE TABLE nombre_tabla (
+ nombre_de_la_columna   Tipo_de_dato   restricciones_opcionales,
+ nombre_de_la_columna   Tipo_de_dato   restricciones_opcionales,
+ ...
+ restriccions_de_taula
+);
+----
+
+Cada columna o campo de la tabla tiene los siguientes datos:
+
+1. Nombre de la columna
+2. Tipo de dato  -- Aquí está la información https://desarrolloweb.com/articulos/1054.php
+3. Restriccions opcionals de la columna
+
+
+
+=== Restricciones de columna opcionales
+
+Son unos modificadores que especifican que comportamiento debe de tener la columna
+
+==== NULL y NOT NULL
+
+El modificador NULL indica que la columna puede tener valores NULL, mientras que
+NOT NULL prohíbe guardar los valores NULL. En caso de no especificar nada, se permiten 
+guardar valores NULL.
+
+==== DEFAULT
+
+Permite especificar un valor predeterminado para lacolumna, por lo que si la inserción de una fila no indica el valor de esta
+columna, se toma el valor predeterminado.
+
+==== AUTO_INCREMENT
+
+Se utiliza sobretodo para las PK (primary Key), para que esta se incremente sin necesidad de ponerla en el insert.
+automàticament.
+
+==== UNIQUE
+
+Indica que no pueden haber dos valores iguales en esta columna en la misma tabla.
+
+La declaración de una columna como UNIQUE hace que se cree automáticamente un
+índice. Este índice acelera las búsquedas y ordena utilizando la columna.
+
+==== PRIMARY KEY
+
+Indica que esta columna es la clave principal de la tabla. Si la clave principal
+consta de más de una columna, debe especificarse después de todas las columnas.
+
+Una PK es automaticamente  NOT NULL.
+
+MySQL crea un indice automàticament para las PK.
+
+====
+Ejemplo:
+
+[source,sql]
+----
+CREATE TABLE Publishers (
+ ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ Name varchar(40) NULL UNIQUE,
+ City varchar(20) NULL,
+ Province char(2) NULL,
+ Country varchar(30) NULL DEFAULT('Canada')
+)
+----
+====
+
+
+----
+
+=== Restriccions de taula
+
+Se utiliza CONSTRAINT.
+
+==== PRIMARY KEY
+
+La clave primaria, PRIMARY KEY, identifica de manera única cada fila de una tabla.
+
+La columna definida como clave primaria (PRIMARY KEY) debe ser UNIQUE (valor único) y NOT NULL (no puede contener valores nulos).
+
+Cada tabla sólo puede tener una clave primaria (PRIMARY KEY).
+
+Ejemplo PRIMARY KEY desde CREATE TABLE clave primaria en MySQL
+
+[source,sql]
+----
+CREATE TABLE users(
+   user_id INT AUTO_INCREMENT PRIMARY KEY,
+   username VARCHAR(40),
+   password VARCHAR(255),
+   email VARCHAR(255)
+);
+
+CREATE TABLE roles(
+   role_id INT AUTO_INCREMENT,
+   role_name VARCHAR(50),
+   CONSTRAINT  PK_ROL PRIMARY KEY(role_id)
+);
+
+----
+
+Definir restricciones PRIMARY KEY usando ALTER TABLE
+
+Si una tabla, por alguna razón, no tiene una clave principal, puede usar la declaración ALTER TABLE para agregar una clave principal a la tabla de la siguiente manera:
+
+[source,sql]
+----
+CREATE TABLE pkdemos(
+   id INT,
+   title VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE pkdemos
+ADD PRIMARY KEY(id);
+
+----
+
+
+==== FOREIGN KEY
+
+Ejemplo FK desde CREATE TABLE:
+
+[source,sql]
+----
+CREATE TABLE categories(
+    categoryId INT AUTO_INCREMENT PRIMARY KEY,
+    categoryName VARCHAR(100) NOT NULL
+) ENGINE=INNODB;
+
+CREATE TABLE products(
+    productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+        REFERENCES categories(categoryId)
+) ENGINE=INNODB;
+----
+
+Agregar FK desde ALTER TABLE:
+
+
+[source,sql]
+----
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    CONSTRAINT  PK_ORDERS PRIMARY KEY (OrderID)
+); 
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID); 
+----
+
+Borrar FK:
+[source,sql]
+----
+ALTER TABLE Orders
+DROP FOREIGN KEY FK_PersonOrder; 
+----
+
+
+=== Modificar tablas ALTER TABLE.
+
+
+
+Vamos a ver la tabla _Hotels_:
+
+[source,sql]
+----
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+> ALTER TABLE Hotels ADD COLUMN Name VARCHAR(100);
+Query OK, 0 rows affected (0.95 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | YES  |     | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+> ALTER TABLE Hotels ADD CONSTRAINT UNIQUE (Name);
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | YES  | UNI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+> ALTER TABLE Hotels MODIFY Name VARCHAR(100) NOT NULL;
+Query OK, 0 rows affected (1.33 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
+| Name    | varchar(100)     | NO   | UNI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+> ALTER TABLE Hotels DROP COLUMN Name;
+Query OK, 0 rows affected (0.97 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> desc Hotels;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| HotelNo | int(10) unsigned | NO   | PRI | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+----
+
+=== Eliminar tablas.
+
+La sentencia DROP TABLE permite eliminar una tabla de la BBDD.
+
+
+[source,sql]
+----
+DROP TABLE Hotels;
+----
+
+TRUNCATE VACÍA LA TABLA, SIN ELIMINARLA.
+
+[source,sql]
+----
+TRUNCATE Hotels;
+----
+
+=== Creaciṕn de Vistas
+
+Una Vista es similar a una tabla, pero no guarda datos reales, sus dartos son el resultado de ejecutar una select y "almacenarlos" en la vista.
+
+
+Ejemplo aquí: https://www.w3schools.com/sql/sql_view.asp
+
