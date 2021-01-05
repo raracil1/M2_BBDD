@@ -1,0 +1,265 @@
+== Modificación de datos: sentencias INSERT, UPDATE y DELETE
+
+=== Sentencia INSERT
+
+La sentencia INSERT añade filas a una tabla de nuestra Base de Datos.
+
+La sintaxis por la sentencia INSERT es:
+[source,sql]
+----
+INSERT [INTO] nombre_tabla | nombre_vista [lista_columnas]
+DEFAULT VALUES | lista_valores | sentencia SELECT
+----
+
+La sentencia INSERT tiene las siguientes propiedades:
+
+* INSERT especifica la tabla o vista donde se insertarán los datos.
+* lista_columnas lista las columnas que se verán afectadas por la INSERT.
+* Si se omite la lista de columnas, se tienen que proporcionar todos los valores.
+* Si se incluye la lista de columnas, se pueden listar en cualquier orden.
+* lista_valores especifica los datos que se quieren insertar en la tabla.
+* Las columnas autoincrementales no es necesario que aparezcan en el Insert.
+
+Si una sentencia no tiene en cuenta las restricciones de la BBDD,devolverá un mensaje de error.
+
+Si no se especifican todas las columnas a lista_columnas*, las otras columnas cogerán el valor por defecto o el siguiente número disponible si es un campo autonumérico.
+
+Ejemplo INSERT tabla 
+[source,sql]
+----
+INSERT INTO Desarrollador
+ VALUES('1', 'SCE Santa Monica Studio', 'Calle 123', 'California')
+----
+
+En el siguiente ejemplo vamos a añadir datos, omitiendo el campo COUNTRY, que como vemos es por defecto 'Canada'
+
+[source,sql]
+----
+
+CREATE TABLE tmpPublishers (
+ ID char(4) NOT NULL,
+ Name varchar(40) NULL,
+ City varchar(20) NULL,
+ Province char(2) NULL,
+ Country varchar(30) NULL DEFAULT('Canada')
+)
+
+INSERT INTO Publishers (ID, Name, City, Province)
+ VALUES ('222', 'Sony Interactive Entertainment', 'Vancouver', 'BC')
+----
+
+
+==== Insertar filas con una sentencia SELECT
+
+Podemos insertar datos de una o varias tablas en otra, siempre que coincidan el tipo de campo y la información no quede inconsistente.
+[source,sql]
+----
+CREATE TABLE Publishers_TEMP (
+ ID char(4) NOT NULL,
+ Name varchar(40) NULL,
+ City varchar(20) NULL,
+ Province char(2) NULL,
+ Country varchar(30) NULL DEFAULT('Canada')
+)
+
+INSERT Publishers_TEMP
+ SELECT * FROM Publishers
+----
+
+Y aquí, simplemente copiamos las columnas que queremos, siendo el resto null, ya que no son obligatorias, a excepción de Country que toma el valor 'Canada'
+[source,sql]
+----
+INSERT Publishers_TEMP(ID, Name)
+ SELECT ID, Name
+ FROM Publishers
+----
+
+
+==== INSERT amb claus autogenerades
+
+Tenemos dos tablas:
+
+[source,sql]
+----
+CREATE TABLE Equipos(
+  Id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  Nombre            VARCHAR(100) NOT NULL,
+  Salario_max             Numeric(10,2),
+  Salario_min             Numeric(10,2)
+
+) ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE=UTF8_SPANISH_CI;
+----
+
+[source,sql]
+----
+CREATE TABLE Jugadores (
+  Id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  Nombre            VARCHAR(100) NOT NULL,
+  Ficha             INT UNSIGNED NOT NULL,
+  Posicion          VARCHAR(10) NOT NULL,
+  Edad              INT UNSIGNED NOT NULL,
+  Id_equipo         INT UNSIGNED NOT NULL,
+  CONSTRAINT UNIQUE (Id_equipo, Ficha),
+  CONSTRAINT FOREIGN KEY (Id_equipo) REFERENCES Equipos(Id)
+) ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE=UTF8_SPANISH_CI;
+----
+
+De estas dos tablas sabemos lo siguiente:
+
+- La tabla Equipos tiene como PK 'Id'.
+- 'Id' es autoincremennt, por lo que no hace falta especificarlo en el insert...
+
+Tenemos 2 formas de hacer los Insert en estas 2 tablas:
+
+[source,sql]
+----
+INSERT INTO Equipos(Name) VALUES ('Valencia CF'); -- Suponemos que es el primer registro por lo que ID=1
+INSERT INTO Jugadores(Nombre, Ficha, Posicion, Edad,Id_equipo)
+  VALUES ('Jose Luis Gaya', '111112, LI, 25, 1);
+----
+
+También odemos utilizar`LAST_INSERT_ID()` para obtener el ultimo ID insertado en la BBDD.
+
+[source,sql]
+----
+INSERT INTO Equipos(Name) VALUES ('Valencia CF');
+INSERT INTO Jugadores(Nombre, Ficha, Posicion, Edad,Id_equipo)
+  VALUES ('Jose Luis Gaya', '111112, 'LI', 25, LAST_INSERT_ID());
+----
+
+
+==== INSERT sin claves autogeneradas
+
+volvemos a crear las tablas, pero sin la PK autoincrement:
+
+[source,sql]
+----
+CREATE TABLE Equipos(
+  Id              INT UNSIGNED  PRIMARY KEY,
+  Nombre            VARCHAR(100) NOT NULL,
+  Salario_max             Numeric(10,2),
+  Salario_min             Numeric(10,2)
+
+) ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE=UTF8_SPANISH_CI;
+----
+
+[source,sql]
+----
+CREATE TABLE Jugadores (
+  Id                INT UNSIGNED  PRIMARY KEY,
+  Nombre            VARCHAR(100) NOT NULL,
+  Ficha             INT UNSIGNED NOT NULL,
+  Posicion          VARCHAR(10) NOT NULL,
+  Edad              INT UNSIGNED NOT NULL,
+  Id_equipo         INT UNSIGNED NOT NULL,
+  Salario_max             Numeric(10,2),
+
+  CONSTRAINT UNIQUE (Id_equipo, Ficha),
+  CONSTRAINT FOREIGN KEY (Id_equipo) REFERENCES Equipos(Id)
+) ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE=UTF8_SPANISH_CI;
+----
+
+
+Ara, hem d'especificar l'Id quan fem l'INSERT perquè el sistema no el genera
+per nosaltres. La idea seria agafar el següent Id disponible, és a dir, l'Id
+més gran que hi hagi fins ara, i sumar-li 1.
+
+Lo ideal es guardar los ID a utilizar en variables, calculando el último de la tabla donde vamos a Insertar. Las variables se especifican como @nombre
+
+[source,sql]
+----
+SELECT MAX(Id)+1 INTO @id_equipos FROM equipos;
+INSERT INTO Equipos(Id,Name) VALUES (@id_equipos,'Valencia CF');
+SELECT MAX(Id)+1 INTO @id_jugadores FROM jugadores;
+INSERT INTO Jugadores(Id,Nombre, Ficha, Posicion, Edad,Id_equipo)
+  VALUES (@id_jugadores,'Jose Luis Gaya', '111112, 'LI', 25, @id_equipos);
+----
+
+[WARNING]
+====
+El Insert puede fallar si otra persona conectada está modificando a la vez la BBDD.
+====
+
+=== UPDATE
+Este es un ejemplo sencillo donde estamos cambiando la columna Posicion de la tabla Jugadores por 'DC'
+
+[source,sql]
+----
+UPDATE Jugadores
+ SET Posicion = 'DC'
+----
+
+Ahora vamos a modificar la columna Edad aumentando su edad en 2 a todos los jugadores que son DC o MC.
+
+[source,sql]
+----
+UPDATE Jugadores
+ SET Edad = Edad + 1
+ WHERE Posicion in ('DC','MC')
+----
+
+==== Subconsultas en Updates
+Se quiere proporcionar a la tabla Equipos la ficha mas alta del jugador de dicho Equipo.
+
+[source,sql]
+----
+UPDATE Equipos
+ SET Salario_MAX = (
+   SELECT max(salario)
+    FROM jugadores
+    WHERE equipos.Id = jugadores.Id_equipo
+ )
+----
+
+===  DELETE
+
+
+La _sentencia DELETE_ elimina filas de un conjunto de registros. Con DELETE tenemos que
+especificar la tabla o vista que contiene las filas que queremos borrar, y solo
+podemos listar una tabla o vista cada vez. Va seguida de una cláusula WHERE.
+
+
+[source,sql]
+----
+DELETE FROM {table_name | view_name }
+ [WHERE clause]
+----
+
+Tiene las siguientes condiciones:
+
+1. Si se omite el WHERE, borras toda la tabla.
+
+2. Un DELETE por tabla.
+
+3. No puedes borrar datos del que dependen otros datos, por ejemplo, no piuedes borrar los equipos de fútbol si no borras antes a los jugadores.
+
+Tenemos 3 tipos de DELETE:
+
+- Borrar todas las filas:
+
+[source,sql]
+----
+DELETE
+ FROM Jugadores;
+----
+
+- Borrar filas seleccionadas:
+
+[source,sql]
+----
+DELETE
+ FROM Jugadores
+ WHERE Id_equipo = 1;
+----
+
+- Borrado con subsonsulta:
+
+[source,sql]
+----
+DELETE FROM Jugadores
+ WHERE id_equipo IN (
+   SELECT id
+   FROM equipos
+   WHERE equipo LIKE 'Valencia CF'
+ );
+----
