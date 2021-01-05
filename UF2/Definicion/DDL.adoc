@@ -105,8 +105,6 @@ CREATE TABLE Publishers (
 ====
 
 
-----
-
 === Restriccions de taula
 
 Se utiliza CONSTRAINT.
