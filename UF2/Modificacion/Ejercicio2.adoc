@@ -1,0 +1,84 @@
+= Activitat: Modificació de dades
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+== Base de datos
+
+Schema_HR
+
+
+
+1. Asegúrese de haber desactivado la confirmación automática. (commit).
+
+
+2. Introduzca en los departamentos de la tabla un nuevo departamento con ID 300 con el nombre Finance, none (id de administrador) 110 y el código de ubicación es 1800. Compruebe que la fila se ha insertado correctamente en la tabla, si es así, confirme la operación.
+
+
+3. Introduzca en los departamentos de la tabla un nuevo departamento con ID 400, y el nombre 'Finances2' su jefe tiene el código 389 y su código de ubicación es 1800. ¿Qué respuesta recibes? ¿porque?
+
+
+4. Introduzca en la tabla empleados el empleado Jose Company con ID 401, su correo electrónico es prova@prova.com,
+--la fecha del contrato es la actual, su salario será de 1600 funcionará como Jefe de Ventas, SA_MAN. No confirme los cambios.
+
+5. Anule la operación anterior y compruebe que la fila ha desaparecido de la tabla.
+
+
+6. Cree una nueva tabla llamada test de acuerdo con la siguiente sintaxis:
+
+[source,sql]
+----
+Create table prova (
+id number(6) primary key,
+name varchar2(20),
+hire_date date,
+salary number(8,2));
+----
+
+7. Introduzca en la tabla los datos correspondientes de todos los empleados del departamento 50.
+
+8. Introduzca en la prueba de tabla un nuevo empleado con el identificador 390, el nombre Julio y el resto de datos son los mismos que los del empleado con ID 119.
+
+9. Introduzca en la tabla los datos de los empleados del departamento 90.
+
+10. Borre todas las filas de la tabla de prueba. Confirme la operación.
+
+11. Introduzca en la tabla los datos de los empleados con el salario más bajo de cada uno de sus departamentos.
+
+12. Modificar el salario del empleado 200 de la tabla de pruebas a 5000.
+
+13. Modificar los salarios de la tabla de pruebas y aumentarlos en un 3%.
+
+14. Modificar la fecha de contratación de los empleados de la tabla de pruebas y aumentarla 1 año (Utilice la función ADD_MONTHS(date,n)).
+
+15. El empleado de los empleados de la tabla 105 ha sido transferido al departamento 100.
+
+16. El empleado 107 de la tabla de pruebas cambia su nombre y salario por el nombre y el salario del empleado 100.
+
+17. El empleado 107 ha cambiado en el departamento de Daniel Faviet(109) y su salario ha cambiado al salario máximo correspondiente a sus puestos de trabajo.
+
+18. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
+
+19. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
+
+20. Ejecute el siguiente comando ¿Qué respuesta da ? ¿Cómo se define la columna commissio_pct? Compruebe la estructura de la tabla.
+
+21. Cree la tabla jobs2 con la sintaxis siguiente.
+
+22. Actualizar el salario mínimo de la tabla de trabajos para que sea igual al salario máximo multiplicado por 0,75 para todos aquellos trabajos cuyo nombre comience por A.
+
+23. Borre la fila del trabajo correspondiente de Job Table Sales Manager.
+
+24. Borra los puestos de trabajo de la tabla jobs2 en el que el salario máximo superior a 1,7 veces el salario mínimo.
+
+25. Crear la tabla de países para que sea una copia de la tabla de países y luego borre todos los países que se encuentran en el mismo continente que Australia. (ver año 21)
+
+26. Despejar de las regiones de tabla del continente 3, region_id 3. ¿Qué pasa? ¿porque?
+
+27. ¿Cómo eliminaría los datos de una tabla de forma diferente?
+
+28. Confirme las operaciones.

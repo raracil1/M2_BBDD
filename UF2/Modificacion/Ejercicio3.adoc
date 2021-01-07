@@ -1,0 +1,65 @@
+= Activitat: Modificació de dades
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+== Base de datos
+
+Utilizar la Base de Datos CHINOOK
+
+
+== Inserts
+
+1. Añade a el profesor de Base de datos como cliente de la tienda (puedes inventarte los datos que desconozcas).
+
+2. Añadir al grupo/artista *Metallica* y su álbum *Master of Puppets*.  https://es.wikipedia.org/wiki/Master_of_Puppets 
+
+
+3. Crea 3 nuevas listas de reproducción con canciones que ya existan en la BBDD.
+
+4. el cliente *Niklas Schröder* ha comprado dos ejemplares de la canción *Losing My Religion* y otro de la canción *Heartland*. 
+Introduce los datos correspondientes en  *Invoice* i
+*InvoiceLine*, suponiendo que ha facturado a su dirección habitual.
+
+5. Hem contractat al client *John Gordon*. El càrrec que ocuparà serà el de
+*Sales Manager* i el seu cap serà la *Nancy Edwards*.
++
+Afegeix una nova fila a la taula d'empleats, copiant totes les dades
+possibles de la taula de clients.
+
+== Updates
+
+1. El cliente *Mark Taylor* se ha cambiado de dirección. Ahora vive en *68-70 Oxford St, Darlinghurst NSW 2010, Australia*. Modifica su entrada a la base de datos
+de acuerdo con este cambio.
+
+2. Disminuye un 20% los precios de las 30 canciones más cortas de la base de datos.
+
+3. Aumenta un 15% los precios de las 20 canciones más vendidas de la base de datos.
+
+4. Hasta ahora, los clientes de la India tenían como asistente a la empleada *Jane
+Peacock*, pero a partir de ahora tendrán a *Margaret Park*. Fez el cambio
+correspondiente a la base de datos.
+
+5. El cliente *Eduardo Martins* se ha quejado de un error a su última factura.
+Además de las canciones que constan, asegura que también compró un ejemplar
+de la canción *Garota De Ipanema*. Modifica su última factura para añadir
+esta compra.
+
+== Borrados
+
+1. Un error ha hecho que todas las facturas emitidas el día 28 de enero de 2013
+sean erróneas: se guardaron a la base de datos, pero no se cobraron ni se
+entregaron las canciones.
++
+Elimina todas las facturas emitidas este día.
+
+2. Parece que hay dos listas de reproducción repetidas a la base de datos.
+Son las que tienen como nombre *Music*. Elimina una de las dos listas de reproducción
+completamente.
+
+3. Borra todas las canciones de la base de datos que no se hayan vendido ninguna
+vez hasta ahora.
