@@ -289,5 +289,12 @@ TRUNCATE Hotels;
 Una Vista es similar a una tabla, pero no guarda datos reales, sus dartos son el resultado de ejecutar una select y "almacenarlos" en la vista.
 
 
+=== Creación de secuencias
+
+http://www.w3bai.com/es/sql/sql_autoincrement.html
+
+
+
+
 Ejemplo aquí: https://www.w3schools.com/sql/sql_view.asp
 
