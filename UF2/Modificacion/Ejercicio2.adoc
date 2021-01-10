@@ -63,11 +63,33 @@ salary number(8,2));
 
 18. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
 
+[source,sql]
+----
+insert into employees (employee_id, last_name, email, job_id)values (800, 'Lopez','lopez@hotmail.com', 'SA_PAT')
+----
+
 19. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
+
+[source,sql]
+----
+insert into employees (employee_id, last_name, email, hire_date,job_id)values (800,'Lopez', 'lopez@hotmail.com',sysdate, 'SA_PAT')
+----
 
 20. Ejecute el siguiente comando ¿Qué respuesta da ? ¿Cómo se define la columna commissio_pct? Compruebe la estructura de la tabla.
 
+[source,sql]
+----
+Update employeesset commission_pct=300where employee_id=100;
+----
+
 21. Cree la tabla jobs2 con la sintaxis siguiente.
+
+[source,sql]
+----
+Create table jobs2 as select * from jobs;
+----
+Comprova la seva estructura mitjançant l'ordre Desc jobs2. 
+Comprova ara quines dades té la taula jobs2.
 
 22. Actualizar el salario mínimo de la tabla de trabajos para que sea igual al salario máximo multiplicado por 0,75 para todos aquellos trabajos cuyo nombre comience por A.
 
