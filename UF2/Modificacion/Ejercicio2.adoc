@@ -16,7 +16,7 @@ Schema_HR
 1. Asegúrese de haber desactivado la confirmación automática. (commit).
 
 
-2. Introduzca en los departamentos de la tabla un nuevo departamento con ID 300 con el nombre Finance, none (id de administrador) 110 y el código de ubicación es 1800. Compruebe que la fila se ha insertado correctamente en la tabla, si es así, confirme la operación.
+2. Introduzca en los departamentos de la tabla un nuevo departamento con ID 300 con el nombre Finance, id de administrador 110 y el código de ubicación es 1800. Compruebe que la fila se ha insertado correctamente en la tabla, si es así, confirme la operación.
 
 
 3. Introduzca en los departamentos de la tabla un nuevo departamento con ID 400, y el nombre 'Finances2' su jefe tiene el código 389 y su código de ubicación es 1800. ¿Qué respuesta recibes? ¿porque?
