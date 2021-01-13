@@ -98,7 +98,7 @@ Comprueba los datos.
 
 25. Crear la tabla de países2 para que sea una copia de la tabla de países y luego borre todos los países que se encuentran en el mismo continente que Australia. (ver año 21)
 
-26. Despejar de las regiones de tabla paises2 del continente 3, region_id 3. ¿Qué pasa? ¿porque?
+26. Borrar de la tabla region la region_id 3. ¿Qué pasa? ¿porque?
 
 27. ¿Cómo eliminaría los datos de una tabla de forma diferente a una funcon delete?
 
