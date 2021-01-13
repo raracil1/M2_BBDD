@@ -13,11 +13,11 @@ Schema_HR y crear la siguiente tabla.
 [source,sql]
 ----
 CREATE TABLE MY_EMPLOYEE(
-ID NUMBER(4),
-LAST_NAME VARCHAR2(25),
-FIRST_NAME VARCHAR2(25),
-USERID VARCHAR2(8),
-SALARY NUMBER(9,2),
+ID NUMERIC(4),
+LAST_NAME VARCHAR(25),
+FIRST_NAME VARCHAR(25),
+USERID VARCHAR(8),
+SALARY NUMERIC(9,2),
 CONSTRAINT MY_EMPLOYEE_ID_PK PRIMARY KEY(ID));
 ----
 
@@ -44,7 +44,7 @@ CONSTRAINT MY_EMPLOYEE_ID_PK PRIMARY KEY(ID));
 
 
 
-2. Cree un script para actualizar el campo userid de los usuarios con los id 3 y 4. Tenga en cuenta que el ID de usuario debe ser la primera letra del nombre con los primeros siete caracteres del apellido.
+2. Cree un script para insertar los usuarios con id 3 y 4 sin el userid y después actualizar el campo userid de los usuarios con los id 3 y 4. Tenga en cuenta que el ID de usuario debe ser la primera letra del nombre con los primeros siete caracteres del apellido.
 
 3. Forzar que los datos introducidos sean permanentes en la base de datos y comprobar que los cuatro registros de la tabla se han añadido.
 
@@ -66,6 +66,6 @@ CONSTRAINT MY_EMPLOYEE_ID_PK PRIMARY KEY(ID));
 
 12. Vacíe la tabla y compruebe que está vacía, consultando los datos de la tabla.
 
-13. Deshacer la operación DELETE que se acaba de realizar en el ejercicio 15 y, por lo tanto, debe mantenerse el INSERT anterior.
+13. Deshacer la operación DELETE que se acaba de realizar en el ejercicio 12 y, por lo tanto, debe mantenerse el INSERT anterior.
 
-14. Confirme que la tabla está de vuelta como en el ejercicio 13 y guarde los cambios.
+14. Confirme que la tabla está de vuelta como en el ejercicio 10 y guarde los cambios.
