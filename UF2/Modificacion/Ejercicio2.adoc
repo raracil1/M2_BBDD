@@ -13,69 +13,68 @@ Schema_HR
 
 
 
-1. Asegúrese de haber desactivado la confirmación automática. (commit).
+1. Asegúrese de haber desactivado la confirmación automática (tanto por sql como por preferencias de workbench). (commit).
 
 
-2. Introduzca en los departamentos de la tabla un nuevo departamento con ID 300 con el nombre Finance, id de administrador 110 y el código de ubicación es 1800. Compruebe que la fila se ha insertado correctamente en la tabla, si es así, confirme la operación.
+2. Introduzca en la tabla departamentos un nuevo departamento con ID 300 con el nombre Finance, id de administrador 110 y el código de ubicación es 1800. Compruebe que la fila se ha insertado correctamente en la tabla, si es así, confirme la operación.
 
 
-3. Introduzca en los departamentos de la tabla un nuevo departamento con ID 400, y el nombre 'Finances2' su jefe tiene el código 389 y su código de ubicación es 1800. ¿Qué respuesta recibes? ¿porque?
+3. Introduzca en la tabla departamentos un nuevo departamento con ID 400, y el nombre 'Finances2' su jefe tiene el código 389 y su código de ubicación es 1800. ¿Qué respuesta recibes? ¿porque?
 
 
-4. Introduzca en la tabla empleados el empleado Jose Company con ID 401, su correo electrónico es prova@prova.com,
---la fecha del contrato es la actual, su salario será de 1600 funcionará como Jefe de Ventas, SA_MAN. No confirme los cambios.
+4. Introduzca en la tabla empleados el empleado Jose Company con ID 401, su correo electrónico es prova@prova.com, la fecha del contrato es la fecha actual (cogerla del sistema), su salario será de 1600 funcionará como Jefe de Ventas, SA_MAN. No confirme los cambios.
 
 5. Anule la operación anterior y compruebe que la fila ha desaparecido de la tabla.
 
 
-6. Cree una nueva tabla llamada test de acuerdo con la siguiente sintaxis:
+6. Cree una nueva tabla llamada prova de acuerdo con la siguiente sintaxis:
 
 [source,sql]
 ----
-Create table prova (
-id number(6) primary key,
-name varchar2(20),
+Create table prova(
+id integer(6) primary key,
+name varchar(20),
 hire_date date,
-salary number(8,2));
+salary float(8,2));
 ----
 
-7. Introduzca en la tabla los datos correspondientes de todos los empleados del departamento 50.
+7. Introduzca en la tabla prueba los datos correspondientes de todos los empleados del departamento 50.
 
-8. Introduzca en la prueba de tabla un nuevo empleado con el identificador 390, el nombre Julio y el resto de datos son los mismos que los del empleado con ID 119.
+8. Introduzca en la tabla prueba un nuevo empleado con el identificador 390, el nombre Julio y el resto de datos son los mismos que los del empleado con ID 119.
 
-9. Introduzca en la tabla los datos de los empleados del departamento 90.
+9. Introduzca en la tabla prueba los datos de los empleados del departamento 90.
 
 10. Borre todas las filas de la tabla de prueba. Confirme la operación.
 
-11. Introduzca en la tabla los datos de los empleados con el salario más bajo de cada uno de sus departamentos.
+11. Introduzca en la tabla prueba los datos de los empleados con el salario más bajo de cada uno de sus departamentos (es necesario subquery).
 
-12. Modificar el salario del empleado 200 de la tabla de pruebas a 5000.
+12. Modificar el salario del empleado 200 de la tabla de prueba a 5000.
 
-13. Modificar los salarios de la tabla de pruebas y aumentarlos en un 3%.
+13. Modificar los salarios de la tabla de prueba y aumentarlos en un 3%.
 
-14. Modificar la fecha de contratación de los empleados de la tabla de pruebas y aumentarla 1 año (Utilice la función ADD_MONTHS(date,n)).
+14. Modificar la fecha de contratación de los empleados de la tabla de prueba y aumentarla 1 año (Utilice la función date_add()).
 
-15. El empleado de los empleados de la tabla 105 ha sido transferido al departamento 100.
+15. El empleado 105 de la tabla empleados ha sido transferido al departamento 100.
 
-16. El empleado 107 de la tabla de pruebas cambia su nombre y salario por el nombre y el salario del empleado 100.
+16. El empleado 107 de la tabla de prueba cambia su nombre y salario por el nombre y el salario del empleado 100.
 
-17. El empleado 107 ha cambiado en el departamento de Daniel Faviet(109) y su salario ha cambiado al salario máximo correspondiente a sus puestos de trabajo.
+17. El empleado 107 ha cambiadoha sido trasladado al departamento de Daniel Faviet(109) y su salario ha cambiado al salario máximo correspondiente a su puesto de trabajo.
 
-18. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
+18. Ejecute la siguiente consulta ¿Qué respuesta da? ¿porque?
 
 [source,sql]
 ----
 insert into employees (employee_id, last_name, email, job_id)values (800, 'Lopez','lopez@hotmail.com', 'SA_PAT')
 ----
 
-19. Ejecute la siguiente declaración ¿Qué respuesta da? ¿porque?
+19. Ejecute la siguiente consulta ¿Qué respuesta da? ¿porque?
 
 [source,sql]
 ----
 insert into employees (employee_id, last_name, email, hire_date,job_id)values (800,'Lopez', 'lopez@hotmail.com',sysdate, 'SA_PAT')
 ----
 
-20. Ejecute el siguiente comando ¿Qué respuesta da ? ¿Cómo se define la columna commissio_pct? Compruebe la estructura de la tabla.
+20. Ejecute la siguiente consulta ¿Qué respuesta da ? ¿Cómo se define la columna commission_pct? Compruebe la estructura de la tabla.
 
 [source,sql]
 ----
@@ -88,19 +87,19 @@ Update employeesset commission_pct=300where employee_id=100;
 ----
 Create table jobs2 as select * from jobs;
 ----
-Comprova la seva estructura mitjançant l'ordre Desc jobs2. 
-Comprova ara quines dades té la taula jobs2.
+Comprueba su estructura con la consulta DESC.
+Comprueba los datos.
 
-22. Actualizar el salario mínimo de la tabla de trabajos para que sea igual al salario máximo multiplicado por 0,75 para todos aquellos trabajos cuyo nombre comience por A.
+22. Actualizar el salario mínimo de la tabla de jobs2 para que sea igual al salario máximo multiplicado por 0,75 para todos aquellos trabajos cuyo nombre comience por A.
 
-23. Borre la fila del trabajo correspondiente de Job Table Sales Manager.
+23. Borre la fila del trabajo correspondiente de la tabla Jobs2 Sales Manager.
 
 24. Borra los puestos de trabajo de la tabla jobs2 en el que el salario máximo superior a 1,7 veces el salario mínimo.
 
-25. Crear la tabla de países para que sea una copia de la tabla de países y luego borre todos los países que se encuentran en el mismo continente que Australia. (ver año 21)
+25. Crear la tabla de países2 para que sea una copia de la tabla de países y luego borre todos los países que se encuentran en el mismo continente que Australia. (ver año 21)
 
-26. Despejar de las regiones de tabla del continente 3, region_id 3. ¿Qué pasa? ¿porque?
+26. Despejar de las regiones de tabla paises2 del continente 3, region_id 3. ¿Qué pasa? ¿porque?
 
-27. ¿Cómo eliminaría los datos de una tabla de forma diferente?
+27. ¿Cómo eliminaría los datos de una tabla de forma diferente a una funcon delete?
 
 28. Confirme las operaciones.
