@@ -16,7 +16,7 @@ Utilizar la Base de Datos CHINOOK
 
 1. Añade a el profesor de Base de datos como cliente de la tienda (puedes inventarte los datos que desconozcas).
 
-2. Añadir al grupo/artista *Metallica* y su álbum *Master of Puppets*.  https://es.wikipedia.org/wiki/Master_of_Puppets 
+2. Añadir al grupo/artista *Extremoduro* y su álbum *Yo, minoria absoluta*.  https://es.wikipedia.org/wiki/Yo,_minor%C3%ADa_absoluta
 
 
 3. Crea 3 nuevas listas de reproducción con canciones que ya existan en la BBDD.
