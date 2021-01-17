@@ -1,0 +1,49 @@
+= Llenguatges SQL: DDL
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== Creación de tablas
+
+1. Crea la Base de Datos "Tienda" a partir de la siguiente defición.
+
+Tabla provincias (codpro, número), esta tabla almacena las provincias de España, cada una con su código de provincia (clave primaria).
+
+
+Tabla pueblos (codpue, número, codpro), esta Tabla almacena los pueblos de España o, al menos, aquellos donde tenemos clientes. Por cada pueblo se dispone de su código de pueblo (clave primaria), su nombre y el código de provincia a la cual pertenece (clave foránea).
+
+
+Tabla clientes (codicli, número, direccion, codpostal, codpue), almacena información de los clientes de la empresa. Por cada cliente se dispone de su código de cliente (clave primaria), su nombre, su dirección, su código postal y el código del pueblo donde reside (clave foránea).
+
+
+Tabla vendedores (codven, número, direccion, codpostal, codpue, codjefe), almacena información de los vendedores de la empresa. Por cada vendedor se dispone de su código de vendedor (clave primaria), su nombre, su dirección, su código postal, el código del pueblo donde reside (clave foránea Tabla pueblos) y el código de su jefe inmediato (clave foránea a la misma Tabla vendedores).
+
+
+Tabla artículos (codart, descrip, precio, stock, stock_*min), almacena información de los artículos que ofrece la empresa y sus cantidades disponibles al almacén (stocks). Por cada artículo se dispone de su código de artículo especific (clave primaria), su descripción, su precio actual, su stock y su stock mínimo.
+
+
+Tabla facturas (codfac, fecha, codcli, codven, iva, dto), almacena toda la información de las facturas. Como cada factura el número de líneas es variable, todas las líneas de todas las facturas se almacenan de manera conjunta en otra tabla. Por cada factura en esta tabla se guarda su código de factura (clave primaria), su fecha, el código del cliente que ha realizado la compra (clave foránea), el código del vendedor que ha realizado la venta (clave foránea), el iva aplicado y el descuento global de la factura.
+
+
+Tabla linea_fac (codfac, linea, canto, codart, precio, dto), almacena información de las líneas de la factura. Por cada línea se dispone del código de la factura a la cual pertenece (clave foránea), su número de línea, la cantidad, el código del artículo (clave foránea), el precio del artículo y el descuento que tiene el artículo, no confundir con el descuento de la factura.
+
+
+--------------------
+--------------------
+
+
+2. Modificación de la tabla articulos para que los campos precio, stock y stock_min solo admitan valores no nulos y positivos.
+
+3. Modificacion de la tabla facturas para que el campo iva solo admita estos valores(4 , 10 , 21) y el campo dto solo admita lo siguiente (10 ,20 ,30 ,40 ,50).
+
+4. Incorporar una columna "importe" a la tabla linea_fact.
+
+5. Borrar la tabla vendedores.
+
+

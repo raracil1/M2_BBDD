@@ -1,0 +1,26 @@
+= Llenguatges SQL: DDL
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== Modificación de tablas
+
+1. A partir de la base de datos videoclub (que teneis en la carpeta BBDD_SCRIPTS).
+
+Modificar la tabla de préstamos para añadir la información de si el préstamo ya ha sido devuelto o no.
+
+Como que se prevé un uso intensivo en la busca de títulos de películas, creáis un índice sobre los títulos de las películas de la base de datos.
+
+Creáis una vista (PRESTECS_PENDIENTES) que facilite la visualización de los préstamos pendientes de devolver. Esta vista tendría que tener el nombre y el teléfono del cliente, el título de la película y la fecha del préstamo. Haría falta que la lista apareciera según la orden (ascendiente) de la fecha de préstamo.
+
+Mostrar la descripción (definición) de la vista PRESTECS_PENDIENTES.
+
+Modificar la estructura de la tabla GENERO para que CodiGenere tenga la propiedad de autoincrementarse.
+
+Modificar la tabla DetallFactura para que en NumeroUnitats tenga por defecto el valor 1 y que sea siempre positivo.

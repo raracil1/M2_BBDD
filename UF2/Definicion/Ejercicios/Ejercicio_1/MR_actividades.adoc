@@ -1,0 +1,26 @@
+= Actividades extraescolares
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+
+
+
+== Modelo relacional
+
+*Towns*([underline]#Name#, Population)
+
+*Schools*([underline]#Code#, Name, Town) +
+{nbsp}{nbsp}on _Town_ referencia _Towns_.
+
+*Children*([underline]#Code#, FirstName, LastName, Phone, Town, SchoolCode) +
+{nbsp}{nbsp}on _Town_ referencia _Towns_ i +
+{nbsp}{nbsp}on _SchoolCode_ referencia _Schools_.
+
+*Activities*([underline]#Name#)
+
+*ActivityOffers*([underline]#SchoolCode, Activity#, Score, Capacity) +
+{nbsp}{nbsp}on _SchoolCode_ referencia _Schools_ i +
+{nbsp}{nbsp}on _Activity_ referencia _Activities_.

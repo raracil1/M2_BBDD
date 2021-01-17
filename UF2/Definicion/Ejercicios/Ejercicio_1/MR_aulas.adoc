@@ -1,0 +1,22 @@
+= Aulas
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+
+
+
+== Modelo relacional
+
+*Students*([underline]#DNI#, FirstName, LastName, Course, Studies).
+
+*Computers*([underline]#Hostname#, MAC, IP, CPU, Memory, ClassroomName) +
+{nbsp}{nbsp}on _ClassroomName_ referencia _Classrooms_.
+
+*Classrooms*([underline]#Name#, Projector, Size, Capacity, AirConditioner).
+
+*StudentComputers*([underline]#StudentDNI, ComputerHostname#) +
+{nbsp}{nbsp}on _StudentDNI_ referencia _Students_ i +
+{nbsp}{nbsp}on _ComputerHostname_ referencia _Computers_.
