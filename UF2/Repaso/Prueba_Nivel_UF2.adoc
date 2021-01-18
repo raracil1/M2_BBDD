@@ -1,0 +1,65 @@
+= Llenguatges SQL: DDL y DML
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== Prueba Nivel UF2 (puntuación máxima 13 puntos)
+
+Utilizando la Base de Datos World.sql que está en el repositorio Github ....
+
+1.	Crear  una  base  de  datos  con  el  nombre  'Prueba  +  _Nombre  +  _Apellido'  y establecerla  como predeterminada.(0.25pts)
+
+2.	Crear una tabla similar a la tabla world.city con el nombre 'ciudades' con los campos 	 (0.5pts):
+
+	id: Entero auto numérico y clave primaria
+	nombre: Texto  de 35 caracteres
+	pais: Texto de 3 caracteres
+	distrito: Texto de 30 caracteres
+	poblacion: Entero
+	
+3.	Importar   las   ciudades   desde   world.city   que posean   una   población   de   al menos   100.000 habitantes.(0.5pts)
+
+4.	Crear una tabla similar a la tabla world.country con el nombre 'paises' y los campos (0,5pts):
+
+	codigo: Texto  de 3 y clave primaria.
+	nombre: texto  52	
+	continente: texto  50
+	region: texto 50
+	superficie: float 10 digitos con 2 decimales.
+	independiente: Entero.
+	poblacion: entero
+	esperanzavida: Float de 3 digitos con 1 decimal
+	
+5.	Importar todos los registros de la tabla country a la tabla paises.
+
+6.	Crear una tabla similar a la tabla world.countrylanguages con el nombre 'lenguajes' y los  campos (0,5pts):
+
+	id: Entero auto numérico y clave primaria.
+	codigo: texto de 3 caracteres.
+	lengua: texto de 30
+	oficial: texto de 20
+	uso: float de 4 digitos con 1 decimal
+	
+7.	Importar todos los registros de la tabla.(0.5pts)
+
+8.	Establecer el campo ciudades.pais como clave foránea que apunta a el campo 'codigo' de la tabla 'paises'.(0.75pts)
+
+9.	Insertar la ciudad 'Alzira' con pais 'ESP' y habitantes 45000.(0.5pts)
+
+10.	Mostrar  la  cantidad  de países que  en  la  actualidad  son  independientes.  Utilizar  para  todas  las consultas la nueva base de datos (las nuevas tablas).(1pts)
+
+11.	Mostrar el número de ciudades con más habitantes que la media.(1.5pts)
+
+12.	Mostrar el  nombre  del país,  el  nombre  de  la  ciudad  y  el  número  de  habitantes  de  las  ciudades con más de 3 millones de habitantes.(1.5pts)
+
+13.	Mostrar Países (nombre, continente y región) más pequeños y más grandes de cada continente.(1.5pts). Todos los países tienen superficies diferentes.
+
+14.	Mostrar código,  nombre  de país y  población  repartida  en  ciudades  de  menos  de  100.000 habitantes (no incluidas en la tabla de ciudades). Descartar países con menos de 100.000 habitantesy los que el cálculo sea nulo.(hasta 1.5pts)
+
+15.	Mostrar nombre, continente y tamaño de los países que sean mayores a la media de  su propio continente.(hasta 1.5pts)
