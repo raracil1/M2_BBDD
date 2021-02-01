@@ -197,4 +197,26 @@ END;
 /
 ----
 
+=== EJERCICIOS PARA PRÁCTICAR
+
+1. Escribe un bloque de código anónimo que cuando lo ejecutes te pida tu nombre, y después el programa te salude, diciendo Hola 'tunombre'.
+
+2. Escribe un bloque de código anónimo que devuelva la suma , resta, multiplicaicon y división de dos variables definidas.
+
+3. Escribe un bloque de código anónimo que realice la potencia de un número que se pida al usuario y multiplice este valor por una constante 10.
+
+4. Ejercicio: copiar y arreglar el siguiente código (sugerencia: mirar la sintaxis para select en PL/SQL y el error que se obtiene):
+
+[source,sql]
+----
+-- mostrar la fecha actual      
+DECLARE
+      fecha Date;
+BEGIN
+     Select Sysdate from dual into fecha ;
+     DBMS_OUTPUT.PUT_LINE('Hoy es ' || fecha);
+END;
+----
+
+
 
