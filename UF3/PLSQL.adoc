@@ -1,0 +1,200 @@
+= PL/SQL
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+== PL/SQL: El lenguaje procedimental de ORACLE
+
+
+
+=== ¿Por qué PL/SQL?
+
+1. Permite el uso de variables.
+
+2. Estructuras de control de flujo y toma de decisiones.
+
+3. Control de excepciones.
+
+4. Reutilización del código a través de paquetes, procedimientos y funciones.
+
+El código esxrito en PL/SQL es ejecutado en el servidor, lo que supone un ahorro de recursos a los clientes de BBDD (ejemplo SQL Developer, WorkBench ...)
+
+Una gran ventaja de este lenguaje en cuestión, son los TRIGGERS, también conocidos como disparadores, que permiten ralizar una acción concreta sobre la base de datos se ha
+modificado, insertado o borrado un registro de una tabla.
+
+
+=== TIPOS DE DATOA PL/SQL
+http://oraclesqlyplsql.blogspot.com/2015/07/tipos-de-datos-oracle-plsql.html
+
+
+
+=== BLOQUES DE CÓDIGO ANÓNIMOS EN PL/SQL
+
+Se construyen de forma dinámica y se ejecutan una sola vez.
+
+[source,sql]
+----
+[DECLARE]
+  -- Declaración de variables, cursores o excepciones definidas por el usuario /*Parte declarativa*/
+BEGIN
+  -- Sentencias SQL y PL/SQL /*Parte de ejecucion*/
+[EXCEPTION]
+  -- acciones a realizar cuando se produce un error /*Parte de excepciones*/
+END;
+
+----
+
+- La sección *DECLARE* es donde se declaran todas las constantes y variables que se van a utilizar en la ejecución del bloque. Esta sección es opcional.
+
+- La sección de ejecución *BEGIN ... END*  incluye las instrucciones a ejecutar en el bloque PL/SQL. Estas instrucciones pueden ser tanto de tipo DML como DDL, así como ordenes procedimentales. Esta es la única sección que es obligatoria. 
+
+- La sección de excepciones *EXCEPTION* es donde se definen los manejadores de errores que soportará el bloque PL/SQL. Esta sección es opcional y no se ejecutará a menos que aparezca un error.
+
+
+[source,sql]
+----
+SET SERVEROUTPUT ON;
+
+DECLARE
+  A VARCHAR(10) := '';
+BEGIN
+  SELECT TO_CHAR(SYSDATE) INTO A FROM DUAL;
+  DBMS_OUTPUT.PUT_LINE('LA FECHA ACTUAL ES : ' || A);
+EXCEPTION
+  WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('HOLA');
+END;
+
+----
+
+Para que la salida pueda verse al ejecutar el programa tiene que estar activa la siguiente variable:
+
+[source,sql]
+----
+SET SEVEROUTPUT ON;
+----
+
+Para mostrar el contenido de una expresión se debe utilizar la sentencia:
+
+[source,sql]
+----
+DBMS_OUTPUT.PUT_LINE (cadena_caracteres);
+----
+
+=== DECLARACIÓN DE VARIABLES
+
+Para poder utilizar las variables es importante declararlas con anterioridad en el apartado DECLARE del bloque de código anónimo.
+
+[source,sql]
+----
+Nombre_variable tipo [NOT NULL] [:= valor | DEFAULT valor]
+
+-- Ejemplos1: Declaramos una variable de tipo fecha y no la inicializamos:
+
+fechaNacimiento DATE;
+
+-- Ejemplo2: Declaramos una variable numérica y la inicializamos.
+
+ID_DEPT NUMBER(2) NOT NULL := 10;
+
+-- Ejemplo3: declaramos una variable caracter y la inicializamos.
+
+localidad VARCHAR2(13) := 'Cornella';
+
+-- Ejemplo4: Declaramos una constante numérica:
+
+IVA CONSTANT NUMBER := 500
+
+-- Ejemplo5: Declarar una variable con el mismo tipo que una columna de una tabla de la BBDD
+
+NombreC Clientes.Nombre%TYPE
+
+-- Ejemplo6: Declarar variable que hace referencia a todos los campos de la tabla.
+
+regC Clientes%ROWTYPE;  /* De esta forma podemos acceder a cada campo de la variable creada utiizando por ejemplo regC.Nombre ... regC.Edad ... */
+
+----
+
+
+=== TIPOS DE OPERADORES CON VARIABLES:
+
+==== Operador de asignación 	
+
+[source,sql]
+----
+:=
+----
+==== Operadores aritméticos 	+ (suma)
+
+[source,sql]
+----
+- (resta)
+
+* (multiplicación)
+
+/ (división)
+
+** (exponente)
+----
+
+==== Operadores relacionales o de comparación 	= (igual a)
+
+[source,sql]
+----
+<>, != (distinto de)
+
+< (menor que)
+
+> (mayor que)
+
+>= (mayor o igual a)
+
+<= (menor o igual a)
+----
+
+==== Operador de concatenación 	
+[source,sql]
+----
+||
+----
+
+==== Comentarios 	
+
+[source,sql]
+----
+/* comentario de una o más líneas */
+
+-- comentario de una línea 
+----
+
+=== DATOS DE ENTRADA
+
+Para poder leer valores de teclado  hay que asignarlos a una variable mediante & seguido de algún texto que nos ayude a saber que nos pide la variable en cuestión.
+
+Por ejemplo:
+
+[source,sql]
+----
+SET SERVEROUTPUT ON
+
+-- ESTE CÓDIGO NOS PIDE LA ALTURA Y LA BASE DE UN TRIANGULO Y CALCULA SU AREA
+
+DECLARE
+ALTURA INT;
+BASE INT;
+
+BEGIN
+ALTURA := &'EL VALOR DE LA ALTURA'
+BASE := &'EL VALOR DE LA BASE'
+
+DBMS_OUTPUT.PUT_LINE ('UN TRIANGULO DE BASE: '||BASE||' Y DE ALTURA: '||ALTURA||' TIENE UN AREA DE : '||BASE*ALTURA/2);
+END;
+/
+----
+
+
