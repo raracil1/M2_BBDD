@@ -16,16 +16,16 @@
 Tabla provincias (codpro, número), esta tabla almacena las provincias de España, cada una con su código de provincia (clave primaria).
 
 
-Tabla pueblos (codpue, número, codpro), esta Tabla almacena los pueblos de España o, al menos, aquellos donde tenemos clientes. Por cada pueblo se dispone de su código de pueblo (clave primaria), su nombre y el código de provincia a la cual pertenece (clave foránea).
+Tabla pueblos (codpue, nombre, codpro), esta Tabla almacena los pueblos de España o, al menos, aquellos donde tenemos clientes. Por cada pueblo se dispone de su código de pueblo (clave primaria), su nombre y el código de provincia a la cual pertenece (clave foránea).
 
 
-Tabla clientes (codicli, número, direccion, codpostal, codpue), almacena información de los clientes de la empresa. Por cada cliente se dispone de su código de cliente (clave primaria), su nombre, su dirección, su código postal y el código del pueblo donde reside (clave foránea).
+Tabla clientes (codicli, nombre, direccion, codpostal, codpue), almacena información de los clientes de la empresa. Por cada cliente se dispone de su código de cliente (clave primaria), su nombre, su dirección, su código postal y el código del pueblo donde reside (clave foránea).
 
 
-Tabla vendedores (codven, número, direccion, codpostal, codpue, codjefe), almacena información de los vendedores de la empresa. Por cada vendedor se dispone de su código de vendedor (clave primaria), su nombre, su dirección, su código postal, el código del pueblo donde reside (clave foránea Tabla pueblos) y el código de su jefe inmediato (clave foránea a la misma Tabla vendedores).
+Tabla vendedores (codven, nombre, direccion, codpostal, codpue, codjefe), almacena información de los vendedores de la empresa. Por cada vendedor se dispone de su código de vendedor (clave primaria), su nombre, su dirección, su código postal, el código del pueblo donde reside (clave foránea Tabla pueblos) y el código de su jefe inmediato (clave foránea a la misma Tabla vendedores).
 
 
-Tabla artículos (codart, descrip, precio, stock, stock_*min), almacena información de los artículos que ofrece la empresa y sus cantidades disponibles al almacén (stocks). Por cada artículo se dispone de su código de artículo especific (clave primaria), su descripción, su precio actual, su stock y su stock mínimo.
+Tabla artículos (codart, descrip, precio, stock, stock_min), almacena información de los artículos que ofrece la empresa y sus cantidades disponibles al almacén (stocks). Por cada artículo se dispone de su código de artículo especific (clave primaria), su descripción, su precio actual, su stock y su stock mínimo.
 
 
 Tabla facturas (codfac, fecha, codcli, codven, iva, dto), almacena toda la información de las facturas. Como cada factura el número de líneas es variable, todas las líneas de todas las facturas se almacenan de manera conjunta en otra tabla. Por cada factura en esta tabla se guarda su código de factura (clave primaria), su fecha, el código del cliente que ha realizado la compra (clave foránea), el código del vendedor que ha realizado la venta (clave foránea), el iva aplicado y el descuento global de la factura.
