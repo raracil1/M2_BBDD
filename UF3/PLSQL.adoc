@@ -219,4 +219,45 @@ END;
 ----
 
 
+=== ESTRUCTURAS DE CONTROL DE FLUJO
+==== CONDICIONALES
+
+[source,sql]
+----
+IF
+
+La sintaxis básica es:
+
+IF condición THEN
+  Bloque de instrucciones;
+[ELSIF condición THEN
+  Bloque de instrucciones;]
+...
+[ELSE
+  Bloque de instrucciones;]
+END IF;
+----
+
+===== IF - THEN
+
+De esta manera evaluamos una condición, si es verdadera, se ejecuta el codigo del programa, y si es falsa no se realiza nada.
+
+[source,sql]
+----
+Ejemplo
+
+Si se trata del cliente número 10, se actualiza; en caso contrario, la transacción se anula:
+
+if  Vnumcli = 10 THEN  
+    UPDATE CLIENTES SET NOMCLI = ’Torres’ where NUMCLI = Vnumcli;  
+    COMMIT;  
+else  
+     ROLLBACK;  
+end if;
+----
+
+
+==== IF - THEN - ELSE
+
+
 
