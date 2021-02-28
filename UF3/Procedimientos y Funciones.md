@@ -117,10 +117,10 @@ preguntar al usuario. Programar el script utilizando la estructura FOR o la estr
 Este ejercicio se tiene que programar con un procedimiento, de tal manera que muestre los números entre
 un rango en este procedimiento.
 Ayuda:
-- Se tiene que programar dentro del script un procedimiento que dado el rango mínimo a 1 y el máximo que
+Se tiene que programar dentro del script un procedimiento que dado el rango mínimo a 1 y el máximo que
 se le pasa como parámetro al procedimiento, imprima por pantalla los números que hay entre
 el rango mínimo y el máximo. El procedimiento recibirá el nombre de RANGO.
-- Además, al mismo script (EA121_exercici1.sql) se tiene que programar un bloque principal, que
+Además, al mismo script (EA121_exercici1.sql) se tiene que programar un bloque principal, que
 tiene que contener los siguientes aspectos. 
 Al mismo script se tiene que realizar lo siguiente:
   preguntar al usuario por el rango máximo.
