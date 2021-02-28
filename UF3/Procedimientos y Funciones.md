@@ -107,3 +107,38 @@ Y las funciones si no queremos almacenarlas en niguna variable, tendremos que me
 ```sql
 CALL DBMS_OUTPUT-PUT_LINE(SUMANUMEROS(10));
 ```
+
+
+
+# MÁS EJERCICIOS
+
+1.  Programar un script que nos muestre los números entre un rango. El rango mínimo es 1 y el máximo se lo tiene que
+preguntar al usuario. Programar el script utilizando la estructura FOR o la estructura WHILE.
+Este ejercicio se tiene que programar con un procedimiento, de tal manera que muestre los números entre
+un rango en este procedimiento.
+Ayuda:
+- Se tiene que programar dentro del script un procedimiento que dado el rango mínimo a 1 y el máximo que
+se le pasa como parámetro al procedimiento, imprima por pantalla los números que hay entre
+el rango mínimo y el máximo. El procedimiento recibirá el nombre de RANGO.
+- Además, al mismo script (EA121_exercici1.sql) se tiene que programar un bloque principal, que
+tiene que contener los siguientes aspectos. 
+Al mismo script se tiene que realizar lo siguiente:
+  preguntar al usuario por el rango máximo.
+  comprobar que el rango máximo no es negativo. Si es negativo dar el mensaje correspondiente y acabar el programa.
+  llamar al procedimiento RANGO, pasando como parámetro el rango máximo introducido por teclado.
+  
+2.  Programar un script (EA121_exercici2.sql) que contenga una función que duplique la cantidad
+recibida como parámetro. La función recibirá el nombre de DUPLICAR_CANTIDAD. Al mismo script se tiene que
+programa un bloque principal que pida por teclado la cantidad y que llame a la función que se acaba de programar,
+pasando el parámetro correspondiente.
+
+#### SOBRE LA BASE DE DATOS HR
+
+3.  Programar un script (exercici3.sql) que contenga un procedimiento que dé de alta un
+nuevo oficio (puesto de trabajo). Los datos del nuevo oficio se tienen que introducir por teclado. Antes de insertar se tiene que comprobar que el
+valor mínimo y máximo del oficio no sea negativo y además, que el salario mínimo sea más pequeño que el máximo.
+
+4.  Programar un script (exercici4.sql) un procedimiento que dé de baja un oficio. El código
+del oficio se tiene que introducir por teclado.
+
+5.  Programar un script (exercici5.sql) que contenga una función que devuelva cuántos empleados hay de un departamento, que se pasará por parámetro a la función. La función llamada CONTAR, se llamará desde un bloque anónimo o principal y el parámetro que se le pasa a la función se le preguntará al usuario y por tanto, se tiene que introducir por teclado.
