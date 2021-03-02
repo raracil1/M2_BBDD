@@ -142,3 +142,52 @@ valor mínimo y máximo del oficio no sea negativo y además, que el salario mí
 del oficio se tiene que introducir por teclado.
 
 5.  Programar un script (exercici5.sql) que contenga una función que devuelva cuántos empleados hay de un departamento, que se pasará por parámetro a la función. La función llamada CONTAR, se llamará desde un bloque anónimo o principal y el parámetro que se le pasa a la función se le preguntará al usuario y por tanto, se tiene que introducir por teclado.
+
+#### EJERCICIO REPASO 1
+
+
+```sql
+ drop table libros;
+
+ create table libros(
+  titulo varchar2(40),
+  autor varchar2(30),
+  editorial varchar2(20),
+  precio number(5,2)
+ );
+
+ insert into libros values ('Uno','Richard Bach','Planeta',15);
+ insert into libros values ('Ilusiones','Richard Bach','Planeta',12);
+ insert into libros values ('El aleph','Borges','Emece',25);
+ insert into libros values ('Aprenda PHP','Mario Molina','Nuevo siglo',50);
+ insert into libros values ('Matematica estas ahi','Paenza','Nuevo siglo',18);
+ insert into libros values ('Puente al infinito','Bach Richard','Sudamericana',14);
+ insert into libros values ('Antología','J. L. Borges','Paidos',24);
+ insert into libros values ('Java en 10 minutos','Mario Molina','Siglo XXI',45);
+ insert into libros values ('Cervantes y el quijote','Borges- Casares','Planeta',34);
+ 
+ ```
+ 
+1.  Creamos un procedimiento que recibe el nombre de una editorial y luego aumenta en un 10% los precios de los libros de tal editorial:
+
+
+2.  Creamos otro procedimiento que recibe 2 parámetros, el nombre de una editorial y el valor de incremento (que tiene por defecto el valor 10):
+
+Ejecutamos el procedimiento enviando valores para ambos argumentos:
+
+Consultamos la tabla "libros" para verificar que los precios de los libros de la editorial "Planeta" han sido aumentados en un 30%:
+
+Ejecutamos el procedimiento "pa_libros_aumentar" omitiendo el segundo parámetro porque tiene establecido un valor por defecto:
+
+Consultamos la tabla "libros" para verificar que los precios de los libros de la editorial "Paidos" han sido aumentados en un 10% (valor por defecto):
+
+3.  Definimos un procedimiento almacenado que ingrese un nuevo libro en la tabla "libros":
+
+
+Llamamos al procedimiento sin enviarle valores para los parámetros:
+
+Veamos cómo se almacenó el registro:
+
+Llamamos al procedimiento enviándole valores solamente para el primer y cuarto parámetros correspondientes al título y precio:
+
+
