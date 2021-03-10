@@ -4,6 +4,8 @@ ejercicios PROCEDURE
 
 Procedimiento que devuelva  el numero de empleados por rango salarial dentro de un departamento.
 El procedimiento solo aceptará el nombre del departamento.
+
+```sql
 Ejemplo resultado.
 
 Rango salario departamento: Finance
@@ -12,3 +14,4 @@ Rango salario departamento: Finance
   8000 -   8999 :    1
   9000 -   9999 :    1
  12000 -  12999 :    1
+```
