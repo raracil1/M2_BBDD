@@ -23,7 +23,7 @@ El procedimiento necesitará como parametros  de entrada el id del empleado y el
 
 #### EJERCICIO 3
 
-Funcion que a partir de un codigo de departamento como dato de entrada, permita saber cuantos manager de cada departamento aparecen en la tabla job_history.
+Funcion manager_job_history que a partir de un codigo de departamento como dato de entrada, permita saber cuantos manager de cada departamento aparecen en la tabla job_history.
 
 AL ejecutar esta select:
 
