@@ -18,3 +18,4 @@ Rango salario departamento: Finance
 
 Procedimiento que permita cambiar el manager de un empleado por otro. Hay que controlar que el manager insertado no sea el mismo
 que ya tiene el empleado, y además hay que controlar que el manager pertenezca al mismo departamento del empleado.
+El procedimiento necesitará como parametros  de entrada el id del empleado y el id del manager.
