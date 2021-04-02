@@ -24,17 +24,17 @@ Los Triggers complementan las capacidades básicas de Oracle para proporcionar u
 Por ejemplo, un Trigger puede restringir las operaciones DML en una tabla para que solo se ejecuten en horario de oficina. 
 También pueden ser usados para:
 
-• Generar automáticamente valores derivados en columnas.
-• Evitar transacciones inválidas. 
-• Imponer complejas autorizaciones de seguridad.
-• Exigir integridad referencial entre los nodos en una Base de Datos distribuida.
-• Hacer cumplir reglas de negocio complejas.
-• Proporcionar un registro de eventos transparente.
-• Proporcionar auditoría.
-• Mantener réplicas síncronas de tablas.
-• Recopilar estadísticas de acceso en tablas.
-• Modificar datos de una tabla cuando se emiten sentencias DML en vistas.
-• Publicar información sobre eventos de Base de Datos, eventos de usuario, y sentencias SQL a aplicaciones suscritas.
+1. Generar automáticamente valores derivados en columnas.
+2. Evitar transacciones inválidas. 
+3. Imponer complejas autorizaciones de seguridad.
+4. Exigir integridad referencial entre los nodos en una Base de Datos distribuida.
+5. Hacer cumplir reglas de negocio complejas.
+6. Proporcionar un registro de eventos transparente.
+7. Proporcionar auditoría.
+8. Mantener réplicas síncronas de tablas.
+9. Recopilar estadísticas de acceso en tablas.
+10. Modificar datos de una tabla cuando se emiten sentencias DML en vistas.
+11. Publicar información sobre eventos de Base de Datos, eventos de usuario, y sentencias SQL a aplicaciones suscritas.
 
 
 ## Restricciones Triggers
@@ -55,11 +55,13 @@ Cuando se crea un trigger para más de una operación DML, se puede utilizar un 
 que componen el trigger que indique que tipo de operación o sentencia ha disparado el trigger. 
 Estos predicados condicionales son los siguientes:
 
+```sql
 Inserting: Retorna true cuando el trigger ha sido disparado por un INSERT
 Deleting: Retorna true cuando el trigger ha sido disparado por un DELETE
 Updating: Retorna true cuando el trigger ha sido disparado por un UPDATE
 Updating (columna): Retorna true cuando el trigger ha sido disparado por un UPDATE y la columna ha sido modificada.
-
+```
+```sql
 CREATE TRIGGER audit_trigger BEFORE INSERT OR DELETE OR UPDATE
   ON classified_table FOR EACH ROW
 BEGIN
@@ -83,7 +85,7 @@ BEGIN
     ' new key: ' || :new.key);
   END IF;
 END;
-
+```
 ## Trigger a nivel de sentencia
 
 A continuación veremos la creación de un disparador para el evento de inserción: "insert trigger".
@@ -111,10 +113,10 @@ Es el valor por defecto si no se especifica.
 Finalmente se coloca el cuerpo del trigger dentro del bloque "begin.. end".
 
 Las siguientes sentencias disparan un trigger de inserción:
-
+```sql
  insert into TABLA values ...;
  insert into TABLA select ... from...;
- 
+ ```
 ### Ejemplo: Creamos un trigger que se dispara cada vez que se ejecuta un "insert" sobre la tabla "videojuegos":
 
 ```sql
