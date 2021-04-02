@@ -136,11 +136,9 @@ referencia el evento que lo disparará y la tabla asociada.
 Para identificar fácilmente los disparadores de otros objetos se recomienda usar un prefijo y darles el nombre de la tabla 
 para la cual se crean junto al tipo de acción.
 
-El disparador se activará antes ("before") del evento "insert" sobre la tabla "videojuegos", es decir, 
-se disparará ANTES que se realice una inserción en "videojuegos". El trigger está definido a nivel de sentencia, 
-se activa una vez por cada instrucción "insert" sobre "videojuegos". El cuerpo del disparador se delimita con "begin... end", 
-allí se especifican las acciones que se realizarán al ocurrir el evento de inserción, en este caso, 
-ingresar en la tabla "control" el nombre del usuario que alteró la tabla "videojuegos" (obtenida mediante la función "user") y la fecha en que lo hizo (mediante la función "sysdate").
+El disparador se activará antes ("before") del evento "insert" sobre la tabla "videojuegos", es decir, se disparará ANTES que se realice una inserción en "videojuegos". 
+El trigger está definido a nivel de sentencia, se activa una vez por cada instrucción "insert" sobre "videojuegos". 
+El cuerpo del disparador se delimita con "begin... end",  allí se especifican las acciones que se realizarán al ocurrir el evento de inserción, en este caso, ingresar en la tabla "control" el nombre del usuario que alteró la tabla "videojuegos" (obtenida mediante la función "user") y la fecha en que lo hizo (mediante la función "sysdate").
 
 ## Trigger a nivel de fila
 
