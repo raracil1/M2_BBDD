@@ -232,6 +232,7 @@ Si al actualizar el precio de un videojuego colocamos un valor superior a 50, co
 
 Podemos crear un disparador para múltiples eventos, que se dispare al ejecutar "insert", "update" y "delete" sobre "videojuegos". En el cuerpo del trigger se realiza la siguiente acción: se almacena el nombre del usuario, la fecha y los antiguos y viejos valores del campo "precio":
 
+```sql
 create or replace trigger tr_videojuegos
  before insert or update or delete
  on videojuegos
@@ -241,6 +242,7 @@ create or replace trigger tr_videojuegos
  end tr_videojuegos
  ;
  /
+ ````
 Si ingresamos un registro, el campo ":old.codigo" y el campo ":old.precio" contendrán "null". Si realizamos una actualización del campo de un campo que no sea "precio", los campos ":old.precio" y ":new.precio" guardarán el mismo valor.
 
 Si eliminamos un registro, el campo ":new.precio" contendrá "null".
@@ -291,6 +293,7 @@ Si actualizamos en una sola sentencia el precio de 2 registros y solamente uno d
 
 El trigger anterior podría haberse creado de la siguiente manera:
 
+```sql
 create or replace trigger tr_precio_videojuegos
  before insert or update of precio
  on videojuegos
@@ -301,6 +304,7 @@ create or replace trigger tr_precio_videojuegos
   end if;
  end tr_precio_videojuegos;
  /
+ ```
 En este caso, la condición se chequea en un "if" dentro del cuerpo del trigger. La diferencia con el primer trigger que contiene "when" es que la condición establecida en el "when" se testea antes que el trigger se dispare y si resulta verdadera, 
 se dispara el trigger, sino no. En cambio, si la condición está dentro del cuerpo del disparador, el trigger se dispara y luego se controla el precio, si cumple la condición, se modifica el precio, sino no.
 
