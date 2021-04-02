@@ -31,6 +31,7 @@ fecha date
 Crear un trigger que inserte una fila en la tabla empleados_baja cuando se borre una fila en la tabla empleados.
 Los datos que se insertan son los del empleado que se da de baja en la tabla empleados, salvo en las columnas
 usuario y fecha se grabarán las variables del sistema USER y SYSDATE que almacenan el usuario y fecha actual.
+
 4. Crear un trigger para impedir que, al insertar un empleado, el empleado y su jefe puedan pertenecer a departamentos distintos.
 5. Crear un trigger para impedir que, al insertar un empleado, la suma de los salarios de los empleados pertenecientes al departamento del empleado insertado supere los 10.000 euros.
 
