@@ -188,26 +188,16 @@ END gest_depart;
 ```
 
 ### EJERCICIOS
-Escribir un paquete completo para gestionar los empleados. El paquete se llamará
-gest_emple e incluirá, al menos los siguientes subprogramas:
-- insertar_nuevo_emple
-- borrar_emple. Cuando se borra un empleado todos los empleados que dependían de
-él pasarán a depender del director del empleado borrado.
-- modificar_oficio_emple
-- modificar_dept_emple
-- modificar_dir_emple
-- modificar_salario_emple
-- modificar_comision_emple
-- visualizar_datos_emple. También se incluirá una versión sobrecargada del
-procedimiento que recibirá el nombre del empleado.
-- buscar_emple_por_nombre. Función local que recibe el nombre y devuelve el
-número.
-Todos los procedimientos recibirán el número del empleado seguido de los demás
-datos necesarios. También se incluirán en el paquete cursores y declaraciones de tipo
-registro, así como siguientes procedimientos que afectarán a todos los empleados:
-- subida_salario_pct: incrementará el salario de todos los empleados el porcentaje
-indicado en la llamada que no podrá ser superior al 25%.
-- subida_salario_imp: sumará al salario de todos los empleados el importe indicado en
-la llamada. Antes de proceder a la incrementar los salarios se comprobará que el
-importe indicado no supera el 25% del salario medio
 
+Escribir un paquete completo para gestionar las localizaciones. El paquete se llamará
+gest_loc y deberá incluir, al menos, los siguientes subprogramas:
+1. insertar_nueva_loc: permite insertar una localizacon nueva. El procedimiento
+recibe como calle, ciudad, postal_code, provincia y country_id . Creará la nueva localizacoin comprobando que no exista ya una en la misma ciudad.
+2. modificar_loc_calle: Recibirá el loc_id. Modificará la calle.
+3. modificar_loc_cod_pos: Recibirá el loc_id. Modificará el codigo postal
+4. modificar_loc_city: Recibirá el loc_id. Modificará la ciudad.
+5. modificar_loc_prov: Recibirá el loc_id. Modificará la provincia.
+6. modificar_loc_country: Recibirá el loc_id. Modificará el pais.
+visualizar_datos_loc: visualizará los datos de una localización cuyo número se
+pasará en la llamada. Además de los datos relativos de una localización, se visualizará el
+número de empleados trabajan en esa localidad.
