@@ -1,0 +1,3 @@
+Crea un bloque anónimo al cual el usuario le pasará un código de pedido, y nos muestre una cabecera con los datos más relevantes del cliente (Nombre,dirección, ciudad, país, teléfono), del pedido (código y fecha), y todos los detalles de los articulos facturados de ese pedido, indicando al final el precio total, el IVA y el precio más IVA.
+
+Además, debes de controlar los errores que puedan darse (excepciones).
