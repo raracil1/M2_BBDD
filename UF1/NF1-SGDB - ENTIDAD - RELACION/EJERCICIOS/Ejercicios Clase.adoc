@@ -1,0 +1,39 @@
+= Ejercicios CHEN
+:doctype: article
+:encoding: utf-8
+:lang: ca
+:toc: left
+:toclevels: 3
+:numbered:
+:ascii-ids:
+
+<<<
+
+
+
+
+
+=== 1.  Ejercicios Diagrama Chen
+
+
+
+1. Construir un diagrama E-R para una compañía de seguros de automóviles cuyos clientes poseen uno o más coches cada uno. Cada coche tiene asociado con él de cero a cualquier número de accidentes registrados. Documentar todos los supuestos que se hace acerca de las restricciones de asignación.
+2. Construir un diagrama E-R para un hospital con un conjunto de pacientes y un conjunto de médicos. Asociar con cada paciente un registro de las diversas pruebas y exámenes realizados.
+3. La oficina del registrador de una universidad mantiene datos sobre las siguientes entidades: (a) cursos, incluidos el número, el título, los créditos, el plan de estudios y los requisitos previos; b) curso ofertas, incluyendo número de curso, año, semestre, número de sección, instructor(es), horarios, y aula; (c) estudiantes, incluyendo identificación de estudiante, nombre y programa; y (d) instructores, incluyendo número de identificación, nombre, departamento y título. Además, la inscripción de los estudiantes en cursos y calificaciones otorgadas a los estudiantes en cada curso en el que están inscritos debe ser modelada adecuadamente. Construir un diagrama E-R para la oficina del registrador. Documentar todos los supuestos
+que se hace acerca de las restricciones de asignación.
+4. Considere una base de datos utilizada para registrar las calificaciones que los estudiantes obtienen en diferentes exámenes de diferentes ofertas de cursos.
+a) Construya un diagrama E-R que modele los exámenes como entidades, y utilice una relación ternaria, para la base de datos anterior.
+b) Construir un diagrama E-R alternativo que utilice sólo una relación binaria
+entre los estudiantes y la oferta de cursos. Asegúrate de que solo una relación
+existe entre un estudiante en particular y un par de ofertas de cursos, sin embargo, puede
+representar las calificaciones que un estudiante obtiene en diferentes exámenes de una oferta de cursos.
+5. Diseña un diagrama E-R para realizar un seguimiento de los logros de tu equipo deportivo favorito. Debe almacenar los partidos jugados, los puntajes en cada partido, los jugadores en cada partido y las estadísticas individuales de los jugadores para cada partido. Las estadísticas resumidas deben modelarse como atributos derivados.
+6. Amplía el diagrama E-R de la pregunta anterior para añadir la información o todos los equipos de una liga.
+7. Considere una base de datos universitaria para la programación de aulas para los exámenes finales. Esta base de datos podría modelarse como el examen de conjunto de entidad única, con atributos nombre de curso, número de sección, número de sala, un tiempo n d. Alternativamente, se podrían definir uno o más conjuntos de entidades adicionales, junto con conjuntos de relaciones para reemplazar algunos de los atributos del conjunto de entidades de examen, como
+• curso con atributos nombre, departamento y c-número
+• sección con atributos s-number e inscripción, y dependiente como débil
+conjunto de entidades en curso
+• sala con atributos r-número, capacidad, un edificio n d
+un. Muestre un diagrama E-R que ilustre el uso de los tres conjuntos de entidades adicionales enumerados.
+b. Explique qué características de la aplicación influirían en la decisión de incluir o no incluir cada uno de los conjuntos de entidades adicionales.
+
